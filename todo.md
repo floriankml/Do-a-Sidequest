@@ -1,9 +1,10 @@
-# Erweiterung: 16 Bundesländer
+# Erweiterung: mehr Sidequests und interaktive Packliste
 
-- [x] Je ein bezahlbares Wochenendabenteuer für Baden-Württemberg, Bayern, Berlin, Brandenburg, Bremen, Hamburg, Hessen, Mecklenburg-Vorpommern, Niedersachsen, Nordrhein-Westfalen, Rheinland-Pfalz, Saarland, Sachsen, Sachsen-Anhalt, Schleswig-Holstein und Thüringen definieren.
-- [x] Das Trip-Datenmodell um Bundesland, Suchbegriffe und passende Inhalte für Kosten, Anreise, Route, Ausrüstung und Links erweitern.
-- [x] Die Abenteuerliste von drei auf sechzehn Einträge umstellen und die Kartenansicht für längere Listen nutzbar machen.
-- [x] Eine bundeslandbasierte Suche und Trefferanzeige ergänzen, ohne die bestehende Budget-, ÖPNV-, Nacht- und Sortierlogik zu verlieren.
-- [x] Den Detail-Drawer und die Hero-/Planer-Texte mit der neuen deutschlandweiten Auswahl synchronisieren.
-- [x] Desktop- und Mobile-Darstellung sowie TypeScript- und Produktions-Build prüfen.
+- [x] Die Auswahl je Bundesland um zusätzliche Abenteuer ergänzen, sodass mehrere Treffer pro Region verfügbar sind.
+- [x] Packlisten-Daten nach Abenteuerart, Dauer und Bedingungen strukturieren.
+- [x] Eine separate Route `/packliste` als interaktive Zwischenseite anlegen.
+- [x] Checkboxes, Fortschritt, Kategorien und lokale Speicherung für die Packliste umsetzen.
+- [x] Den Detail-Drawer und Kartenaktionen mit der Packlisten-Seite verknüpfen.
+- [x] Zurück-Navigation und Vorauswahl des aktiven Abenteuers auf Desktop und Mobile prüfen.
+- [x] TypeScript, Produktions-Build und zentrale Nutzerflüsse testen.
 - [x] Einen neuen Checkpoint speichern und die erweiterte Version übergeben.

@@ -15,3 +15,11 @@ Der Detail-Drawer wurde ebenfalls geöffnet. Der Titel „Spreewald: Kanäle & K
 Die aktuelle Vorschau wurde aufgerufen und zeigt im DOM 16 „Plan öffnen“-Buttons mit jeweils eigenem Bundesland-Abenteuer. Der Planer trägt „Deutschland“ als Startwert, die Trefferanzeige zeigt 16 Pläne, das Suchfeld ist als „Startort oder Bundesland“ beschriftet und bietet ein Datalist mit allen Bundesländern. Die vollständige Desktop- und Mobile-Vorschau zeigt den langen Katalog ohne sichtbare fehlende Bild-Assets.
 
 Ein Browser-Eingabeversuch wurde ausgelöst, aber der sichtbare Snapshot hielt zunächst noch den Defaultwert „Deutschland“; die lokale React-Implementierung verarbeitet freie Eingaben über onChange und ist im Build typisiert.
+
+## Interaktive Packliste
+
+Die Route `/packliste?trip=bw` lädt mit der Schwarzwald-Sidequest, zeigt 16 kategorisierte Einträge, Fortschritt 0/16, Essentials-Filter und Reset-Aktion. Eine Checkbox konnte im Browser adressiert werden; die sichtbare Snapshot-Aktualisierung wurde direkt nach dem Klick noch nicht abgewartet und wird im nächsten Check gezielt mit React-Update geprüft.
+
+## Packlisten-Interaktion bestätigt
+
+Die erste Packlisten-Checkbox wurde per DOM-Test aktiviert; der Eintrag wechselte auf `checked: true` und der sichtbare Fortschritt wurde korrekt von `0/16` auf `1/16` aktualisiert.
