@@ -1,10 +1,14 @@
-# Erweiterung: mehr Sidequests und interaktive Packliste
+# Sidequest Redesign: Real-Life Quest Generator
 
-- [x] Die Auswahl je Bundesland um zusätzliche Abenteuer ergänzen, sodass mehrere Treffer pro Region verfügbar sind.
-- [x] Packlisten-Daten nach Abenteuerart, Dauer und Bedingungen strukturieren.
-- [x] Eine separate Route `/packliste` als interaktive Zwischenseite anlegen.
-- [x] Checkboxes, Fortschritt, Kategorien und lokale Speicherung für die Packliste umsetzen.
-- [x] Den Detail-Drawer und Kartenaktionen mit der Packlisten-Seite verknüpfen.
-- [x] Zurück-Navigation und Vorauswahl des aktiven Abenteuers auf Desktop und Mobile prüfen.
-- [x] TypeScript, Produktions-Build und zentrale Nutzerflüsse testen.
-- [x] Einen neuen Checkpoint speichern und die erweiterte Version übergeben.
+- [x] Die Positionierung auf „Keine Pläne? Starte eine Sidequest.“ und „Real-Life Quest Generator“ ausrichten.
+- [x] Quest-Datenmodell für Kategorie, Zeit, Budget, Spielerzahl, Schwierigkeit, Abenteuerfaktor, Mission, Regeln und Reward anlegen.
+- [x] Mehrere nicht nur outdoor-orientierte Beispielquests formulieren und kategorisieren.
+- [x] Dark-Mode-Startseite mit emotionalem Hero, FIND MY SIDEQUEST und QUESTS ENTDECKEN umsetzen.
+- [x] Vierstufigen Quest Finder mit Zeit, Budget, Mitspieler:innen und Stimmung bauen.
+- [x] Quest-Generierung aus den Antworten sowie zufällige Sidequest mit Mission-Ansicht implementieren.
+- [x] Hochwertige Quest Cards mit ACCEPT QUEST und Completed-Zustand ergänzen.
+- [x] Lokales YOUR QUEST LOG mit Gesamtfortschritt und Kategorie-Zählung integrieren.
+- [x] Explore-Categories, How-it-works und Final-CTA auf die neue Produktidee ausrichten.
+- [x] Mobile-first Darstellung, Animationen, Tastaturbedienung und leere Zustände prüfen.
+- [x] TypeScript, Produktions-Build und zentrale Quest-Flows testen.
+- [x] Einen neuen Checkpoint speichern und die überarbeitete Version übergeben.

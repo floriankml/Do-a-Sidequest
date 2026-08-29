@@ -23,3 +23,11 @@ Die Route `/packliste?trip=bw` lädt mit der Schwarzwald-Sidequest, zeigt 16 kat
 ## Packlisten-Interaktion bestätigt
 
 Die erste Packlisten-Checkbox wurde per DOM-Test aktiviert; der Eintrag wechselte auf `checked: true` und der sichtbare Fortschritt wurde korrekt von `0/16` auf `1/16` aktualisiert.
+
+## Sidequest Redesign
+
+Die neue Startseite lädt im Browser mit dem dunklen, modernen Quest-Interface. Hero, FIND MY SIDEQUEST, Quest Finder, 12 Beispielquests, Kategorie-Tabs, Quest Log und Final CTA sind sichtbar. Ein erster browserbasierter Klickversuch auf START FINDER wurde ausgelöst, die nachfolgende Snapshot-Ansicht stand zunächst weiterhin auf dem Intro-Step; die Finder-Interaktion wird gezielt über die DOM-Click-Logik nachgeprüft.
+
+## Quest Finder bestätigt
+
+Der Finder wurde direkt über die DOM-Interaktion gestartet und durch vier Fragen geführt: Unter 2 Stunden, 0 €, alleine, Überraschung. Der Fortschritt wechselte auf `READY`; als konkrete Mission wurde „Catch the Sunrise“ mit der passenden Mission „Finde einen Ort in deiner Umgebung, an dem du den Sonnenaufgang sehen kannst.“ generiert.
