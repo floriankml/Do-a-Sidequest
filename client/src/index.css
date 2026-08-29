@@ -404,3 +404,41 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
 }
+
+/* Badge cabinet: compact milestones that make creative, low-pressure progress visible. */
+.badges-panel { grid-column: 1 / -1; margin-top: 8px; border-top: 1px solid var(--border); padding-top: 58px; }
+.badges-heading { display: flex; align-items: end; justify-content: space-between; gap: 25px; margin-bottom: 27px; }
+.badges-heading h3 { margin: 15px 0 0; font-family: var(--display); font-size: clamp(35px, 4vw, 55px); letter-spacing: -.07em; line-height: .92; }
+.badges-heading h3 em { color: var(--lime); font-style: normal; }
+.badges-count { display: grid; grid-template-columns: auto auto; align-items: end; column-gap: 6px; color: var(--slate); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; text-transform: uppercase; }
+.badges-count strong { color: var(--lime); font-family: var(--display); font-size: 39px; letter-spacing: -.08em; line-height: .75; }
+.badges-count small { grid-column: 1 / -1; margin-top: 8px; font-size: 8px; }
+.badge-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 11px; }
+.badge-card { display: grid; grid-template-columns: 48px 1fr; gap: 14px; min-height: 126px; border: 1px solid var(--border); padding: 17px; background: rgba(255,255,255,.025); transition: border-color 180ms var(--ease-out), background 180ms var(--ease-out), transform 180ms var(--ease-out); }
+.badge-card:hover { border-color: var(--badge-color, var(--lime)); background: rgba(255,255,255,.05); transform: translateY(-3px); }
+.badge-icon { display: grid; place-items: center; width: 46px; height: 46px; border: 1px solid var(--badge-color, var(--lime)); color: var(--badge-color, var(--lime)); background: color-mix(in srgb, var(--badge-color, var(--lime)) 9%, transparent); }
+.badge-copy { min-width: 0; }
+.badge-status { color: var(--badge-color, var(--lime)); font-family: var(--mono); font-size: 8px; font-weight: 700; letter-spacing: .11em; text-transform: uppercase; }
+.badge-copy h3 { margin: 7px 0 4px; color: var(--foreground); font-family: var(--display); font-size: 18px; letter-spacing: -.04em; }
+.badge-copy p { min-height: 32px; margin: 0; color: var(--slate); font-size: 11px; line-height: 1.4; }
+.badge-track { height: 3px; margin-top: 12px; background: rgba(255,255,255,.11); }
+.badge-track span { display: block; height: 100%; background: var(--badge-color, var(--lime)); transition: width 220ms var(--ease-out); }
+.badge-unlocked { --badge-color: var(--lime); }
+.badge-locked { --badge-color: #74808c; opacity: .75; }
+.badge-card-violet { --badge-color: var(--violet); }
+.badge-card-cyan { --badge-color: var(--cyan); }
+.badge-card-orange { --badge-color: var(--orange); }
+.badge-card-blue { --badge-color: var(--cyan); }
+.badge-card-pink { --badge-color: var(--pink); }
+.badge-card-lime { --badge-color: var(--lime); }
+
+@media (max-width: 900px) {
+  .badge-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 650px) {
+  .badges-panel { padding-top: 42px; }
+  .badges-heading { align-items: start; }
+  .badges-count { flex: 0 0 auto; }
+  .badge-grid { grid-template-columns: 1fr; }
+  .badge-card { min-height: 110px; }
+}

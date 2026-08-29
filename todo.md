@@ -1,14 +1,10 @@
-# Sidequest Redesign: Real-Life Quest Generator
+# Sidequest: Badges & kreative Missionen
 
-- [x] Die Positionierung auf „Keine Pläne? Starte eine Sidequest.“ und „Real-Life Quest Generator“ ausrichten.
-- [x] Quest-Datenmodell für Kategorie, Zeit, Budget, Spielerzahl, Schwierigkeit, Abenteuerfaktor, Mission, Regeln und Reward anlegen.
-- [x] Mehrere nicht nur outdoor-orientierte Beispielquests formulieren und kategorisieren.
-- [x] Dark-Mode-Startseite mit emotionalem Hero, FIND MY SIDEQUEST und QUESTS ENTDECKEN umsetzen.
-- [x] Vierstufigen Quest Finder mit Zeit, Budget, Mitspieler:innen und Stimmung bauen.
-- [x] Quest-Generierung aus den Antworten sowie zufällige Sidequest mit Mission-Ansicht implementieren.
-- [x] Hochwertige Quest Cards mit ACCEPT QUEST und Completed-Zustand ergänzen.
-- [x] Lokales YOUR QUEST LOG mit Gesamtfortschritt und Kategorie-Zählung integrieren.
-- [x] Explore-Categories, How-it-works und Final-CTA auf die neue Produktidee ausrichten.
-- [x] Mobile-first Darstellung, Animationen, Tastaturbedienung und leere Zustände prüfen.
-- [x] TypeScript, Produktions-Build und zentrale Quest-Flows testen.
-- [x] Einen neuen Checkpoint speichern und die überarbeitete Version übergeben.
+- [x] Badge-System mit sichtbaren Levels, Bedingungen und Freischaltzuständen definieren.
+- [x] Viele einfache kreative Sidequests für Solo-, Duo- und Freundes-Situationen ergänzen.
+- [x] Kosten, Dauer, Spielerzahl, Kategorie und Difficulty für neue Quests hinterlegen.
+- [x] Badge-Freischaltung an abgeschlossene Quests und Kategorien koppeln.
+- [x] Badge-Ansicht und Fortschritt im Quest Log integrieren.
+- [x] Neue Quests in Finder, Kategorie-Tabs und Kartenansicht sichtbar machen.
+- [x] Mobile Darstellung und Interaktionen testen.
+- [x] TypeScript-/Produktions-Build prüfen und Checkpoint speichern.
