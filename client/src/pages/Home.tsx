@@ -45,100 +45,31 @@ type Trip = {
   accent: string;
 };
 
+const makeTrip = (trip: Omit<Trip, "links"> & { links?: Trip["links"] }): Trip => ({
+  ...trip,
+  links: trip.links ?? [
+    { label: "Verbindung prüfen", href: "https://int.bahn.de/en" },
+    { label: "Route bei Komoot", href: "https://www.komoot.com/" },
+  ],
+});
+
 const trips: Trip[] = [
-  {
-    id: "spreewald",
-    title: "Spreewald: Kanäle & Kiefern",
-    region: "Brandenburg · ab Berlin",
-    image: "/manus-storage/sidequest-forest-fallback_f5d5abde.jpg",
-    cost: 24,
-    distance: "85 km",
-    duration: "2 Tage",
-    difficulty: "easy",
-    transport: "RE + Rad",
-    nights: "1 Nacht",
-    description:
-      "Flache Pfade, stille Kanäle und ein Sonnenaufgang, für den du kein Auto brauchst.",
-    route: [
-      "Sa · 08:10 — Berlin Ostkreuz → Lübbenau",
-      "Sa · 10:00 — Gurkenradweg bis Lehde",
-      "Sa · 18:30 — Biwakplatz am Wasser",
-      "So · 09:00 — Kleine Runde durch den Hochwald",
-    ],
-    costs: [
-      { label: "Regionalbahn", value: "12 €" },
-      { label: "Biwakplatz", value: "8 €" },
-      { label: "Essen & Snacks", value: "4 €" },
-    ],
-    gear: ["Fahrrad oder Leih-Rad", "Isomatte + Schlafsack", "Wasserflasche", "Regenlayer"],
-    links: [
-      { label: "DB Navigator öffnen", href: "https://int.bahn.de/en" },
-      { label: "Route bei Komoot", href: "https://www.komoot.com/" },
-    ],
-    accent: "saffron",
-  },
-  {
-    id: "saxon-switzerland",
-    title: "Sächsische Schweiz: Felsenfenster",
-    region: "Sachsen · ab Berlin",
-    image: "/manus-storage/sidequest-lake-fallback_01434695.jpg",
-    cost: 38,
-    distance: "190 km",
-    duration: "2 Tage",
-    difficulty: "medium",
-    transport: "EC + S-Bahn",
-    nights: "1 Nacht",
-    description:
-      "Sandstein, Nebel über der Elbe und ein Aussichtspunkt, der sich nach mehr anfühlt als 38 €.",
-    route: [
-      "Sa · 06:45 — Berlin Hbf → Schmilka",
-      "Sa · 10:30 — Malerweg bis Papststein",
-      "Sa · 17:00 — Zeltplatz am Lilienstein",
-      "So · 07:30 — Sonnenaufgang an der Bastei",
-    ],
-    costs: [
-      { label: "Zug & Fähre", value: "22 €" },
-      { label: "Zeltplatz", value: "10 €" },
-      { label: "Proviant", value: "6 €" },
-    ],
-    gear: ["Feste Schuhe", "Stirnlampe", "Kleines Zelt", "Offline-Karte"],
-    links: [
-      { label: "Nationalpark-Regeln", href: "https://nationalpark-saechsische-schweiz.de/" },
-      { label: "Tour bei Komoot", href: "https://www.komoot.com/" },
-    ],
-    accent: "pine",
-  },
-  {
-    id: "harz",
-    title: "Harz: Brocken auf Umwegen",
-    region: "Sachsen-Anhalt · ab Berlin",
-    image: "/manus-storage/sidequest-hero_13e2e1f7.jpg",
-    cost: 56,
-    distance: "255 km",
-    duration: "2 Tage",
-    difficulty: "hard",
-    transport: "RE + Bus",
-    nights: "1 Nacht",
-    description:
-      "Eine lange Linie durch Fichtenwald und Hochmoor – für den Moment, in dem die Stadt wirklich weg ist.",
-    route: [
-      "Sa · 06:00 — Berlin → Wernigerode",
-      "Sa · 10:45 — Aufstieg über den Hohnekamm",
-      "Sa · 18:00 — Hütte oder Trekkingplatz",
-      "So · 08:30 — Brockenrunde & Rückfahrt",
-    ],
-    costs: [
-      { label: "Bahn & Bus", value: "35 €" },
-      { label: "Trekkingplatz", value: "12 €" },
-      { label: "Essen & Kaffee", value: "9 €" },
-    ],
-    gear: ["Wasser für 6 Stunden", "Warme Schicht", "Blasenpflaster", "Powerbank"],
-    links: [
-      { label: "Fahrplan prüfen", href: "https://int.bahn.de/en" },
-      { label: "Wetter im Harz", href: "https://www.dwd.de/" },
-    ],
-    accent: "clay",
-  },
+  makeTrip({ id: "bw", title: "Schwarzwald: Schluchtensteig light", region: "Baden-Württemberg", image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80", cost: 34, distance: "210 km", duration: "2 Tage", difficulty: "medium", transport: "RE + Bus", nights: "1 Nacht", description: "Moosige Wege, kleine Klammen und Schwarzwaldluft – ohne Wellnesshotel im Budget.", route: ["Sa · 07:20 — Freiburg → Kirchzarten", "Sa · 10:00 — Ravenna­schlucht bis Hinterzarten", "Sa · 18:00 — Zeltplatz am Titisee", "So · 09:00 — Seeufer-Runde & Rückfahrt"], costs: [{ label: "Bahn & Bus", value: "20 €" }, { label: "Zeltplatz", value: "8 €" }, { label: "Proviant", value: "6 €" }], gear: ["Feste Schuhe", "Regenjacke", "Isomatte", "Offline-Karte"], accent: "pine" }),
+  makeTrip({ id: "bavaria", title: "Bayern: Tegernsee über die Alm", region: "Bayern", image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80", cost: 42, distance: "65 km", duration: "2 Tage", difficulty: "medium", transport: "S-Bahn + Bus", nights: "1 Nacht", description: "Almwiesen, Seeufer und eine Nacht unter Sternen – der Klassiker ohne Auto.", route: ["Sa · 08:00 — München Hbf → Gmund", "Sa · 10:30 — Höhenweg zum Wallberg", "Sa · 17:30 — Campingplatz am See", "So · 09:00 — Uferweg nach Tegernsee"], costs: [{ label: "Bahn & Bus", value: "24 €" }, { label: "Camping", value: "11 €" }, { label: "Essen", value: "7 €" }], gear: ["Sonnencreme", "Badesachen", "Zelt", "Kopflampe"], accent: "saffron" }),
+  makeTrip({ id: "berlin", title: "Berlin: Müggelberge & Badestrand", region: "Berlin", image: "https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=900&q=80", cost: 18, distance: "22 km", duration: "1 Tag", difficulty: "easy", transport: "S-Bahn + Tram", nights: "Tagestrip", description: "Wald, Sand und ein Sonnenuntergang am See – die Sidequest direkt vor der Haustür.", route: ["09:30 — S-Bahn nach Köpenick", "10:30 — Müggelheimer Damm bis Müggelturm", "14:00 — Picknick am Müggelsee", "19:00 — Tram zurück in die Stadt"], costs: [{ label: "ÖPNV", value: "8 €" }, { label: "Snacks", value: "8 €" }, { label: "Badezeug", value: "2 €" }], gear: ["Badezeug", "Decke", "Wasser", "Powerbank"], accent: "clay" }),
+  makeTrip({ id: "brandenburg", title: "Brandenburg: Schorfheide-Runde", region: "Brandenburg", image: "https://images.unsplash.com/photo-1473445361085-b9a07f55608b?auto=format&fit=crop&w=900&q=80", cost: 24, distance: "70 km", duration: "2 Tage", difficulty: "easy", transport: "RE + Rad", nights: "1 Nacht", description: "Kiefern, klare Seen und ein ruhiger Zeltplatz – Brandenburg kann mehr als Ausflugsverkehr.", route: ["Sa · 08:45 — Berlin → Joachimsthal", "Sa · 10:30 — Werbellinsee-Runde", "Sa · 17:00 — Naturcamp am See", "So · 10:00 — Kleine Radschleife nach Altenhof"], costs: [{ label: "Regionalbahn", value: "12 €" }, { label: "Zeltplatz", value: "8 €" }, { label: "Essen", value: "4 €" }], gear: ["Fahrrad", "Badesachen", "Mückenspray", "Tarp"], accent: "pine" }),
+  makeTrip({ id: "bremen", title: "Bremen: Weser, Watt & Wind", region: "Bremen", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80", cost: 27, distance: "75 km", duration: "2 Tage", difficulty: "easy", transport: "RE + Rad", nights: "1 Nacht", description: "Mit dem Rad raus aus der Stadt, am Deich entlang und dem Wetter beim Wechseln zusehen.", route: ["Sa · 09:10 — Bremen Hbf → Nordenham", "Sa · 11:00 — Weserradweg Richtung Küste", "Sa · 18:00 — Jugendzeltplatz am Deich", "So · 08:00 — Wattkante & Rückfahrt"], costs: [{ label: "Bahn", value: "15 €" }, { label: "Zeltplatz", value: "7 €" }, { label: "Proviant", value: "5 €" }], gear: ["Windbreaker", "Fahrrad", "Stirnlampe", "Thermoskanne"], accent: "saffron" }),
+  makeTrip({ id: "hamburg", title: "Hamburg: Elbe rauswärts", region: "Hamburg", image: "https://images.unsplash.com/photo-1439853949127-fa647821eba0?auto=format&fit=crop&w=900&q=80", cost: 21, distance: "48 km", duration: "1 Tag", difficulty: "easy", transport: "S-Bahn + Fähre", nights: "Tagestrip", description: "Containerhafen, Elbstrand und ein langer Rückweg mit Sand in den Schuhen.", route: ["10:00 — Landungsbrücken → Fähre nach Finkenwerder", "11:00 — Elbuferweg Richtung Blankenese", "15:00 — Picknick am Falkensteiner Ufer", "19:30 — S-Bahn zurück"], costs: [{ label: "HVV & Fähre", value: "12 €" }, { label: "Essen", value: "7 €" }, { label: "Kaffee", value: "2 €" }], gear: ["Decke", "Badezeug", "Snacks", "Windjacke"], accent: "clay" }),
+  makeTrip({ id: "hesse", title: "Hessen: Edersee-Waldkante", region: "Hessen", image: "https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=900&q=80", cost: 39, distance: "155 km", duration: "2 Tage", difficulty: "medium", transport: "RE + Bus", nights: "1 Nacht", description: "Waldkante, Staumauer und ein See, der sich wie Urlaub anfühlt – nur näher.", route: ["Sa · 07:00 — Kassel → Vöhl", "Sa · 10:30 — Urwaldsteig bis Asel", "Sa · 18:00 — Trekkingplatz im Nationalpark", "So · 09:00 — Ederseeufer & Heimweg"], costs: [{ label: "Bahn & Bus", value: "23 €" }, { label: "Trekkingplatz", value: "8 €" }, { label: "Proviant", value: "8 €" }], gear: ["Wasserfilter", "Zelt", "Wanderschuhe", "Offline-Karte"], accent: "pine" }),
+  makeTrip({ id: "mecklenburg", title: "Mecklenburg-Vorpommern: Seenplatte per Rad", region: "Mecklenburg-Vorpommern", image: "https://images.unsplash.com/photo-1464278533981-50106e6176b1?auto=format&fit=crop&w=900&q=80", cost: 36, distance: "120 km", duration: "2 Tage", difficulty: "easy", transport: "RE + Rad", nights: "1 Nacht", description: "Ein See nach dem anderen, flache Kilometer und genug Badepausen für zwei Tage.", route: ["Sa · 08:15 — Berlin → Neustrelitz", "Sa · 10:30 — Müritz-Radweg nach Wesenberg", "Sa · 17:30 — Camping am Kleinen Labussee", "So · 09:00 — Seenschleife & Zug zurück"], costs: [{ label: "Bahn", value: "18 €" }, { label: "Camping", value: "10 €" }, { label: "Essen", value: "8 €" }], gear: ["Fahrrad", "Badesachen", "Sonnenhut", "Zelt"], accent: "saffron" }),
+  makeTrip({ id: "lower-saxony", title: "Niedersachsen: Lüneburger Heide", region: "Niedersachsen", image: "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80", cost: 29, distance: "65 km", duration: "2 Tage", difficulty: "easy", transport: "RE + Bus", nights: "1 Nacht", description: "Weite Heideflächen, wenig Höhenmeter und ein Abend, der nach Kiefern riecht.", route: ["Sa · 08:40 — Hamburg → Schneverdingen", "Sa · 10:30 — Heidschnuckenweg-Etappe", "Sa · 17:30 — Jugendzeltplatz im Wald", "So · 09:00 — Heide loop & Rückfahrt"], costs: [{ label: "Bahn & Bus", value: "17 €" }, { label: "Zeltplatz", value: "7 €" }, { label: "Snacks", value: "5 €" }], gear: ["Wasser", "Sonnencreme", "Isomatte", "Mückenspray"], accent: "clay" }),
+  makeTrip({ id: "nrw", title: "NRW: Eifelsteig mit Vulkanblick", region: "Nordrhein-Westfalen", image: "https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80", cost: 33, distance: "95 km", duration: "2 Tage", difficulty: "medium", transport: "RE + Bus", nights: "1 Nacht", description: "Kraterseen, Waldpfade und eine kleine Flucht aus dem dichtesten Bundesland.", route: ["Sa · 07:30 — Köln → Blankenheim", "Sa · 10:30 — Eifelsteig bis Nettersheim", "Sa · 18:00 — Trekkingplatz am Waldrand", "So · 09:00 — Urftquelle & Rückfahrt"], costs: [{ label: "Bahn & Bus", value: "20 €" }, { label: "Trekkingplatz", value: "8 €" }, { label: "Proviant", value: "5 €" }], gear: ["Feste Schuhe", "Regenlayer", "Stirnlampe", "Erste Hilfe"], accent: "pine" }),
+  makeTrip({ id: "rhineland", title: "Rheinland-Pfalz: Moselsteig kompakt", region: "Rheinland-Pfalz", image: "https://images.unsplash.com/photo-1482192505345-5655af888cc4?auto=format&fit=crop&w=900&q=80", cost: 41, distance: "130 km", duration: "2 Tage", difficulty: "medium", transport: "RE + Fähre", nights: "1 Nacht", description: "Weinberge, Flusskurven und ein Panorama, das du dir mit ein paar Höhenmetern verdienst.", route: ["Sa · 07:20 — Koblenz → Cochem", "Sa · 10:00 — Moselsteig Richtung Beilstein", "Sa · 18:00 — Camping oberhalb der Mosel", "So · 08:30 — Aussichtsschleife & Fähre"], costs: [{ label: "Bahn & Fähre", value: "25 €" }, { label: "Camping", value: "9 €" }, { label: "Essen", value: "7 €" }], gear: ["Wanderschuhe", "Sonnenhut", "Tarp", "Wasser"], accent: "saffron" }),
+  makeTrip({ id: "saarland", title: "Saarland: Saarschleife früh", region: "Saarland", image: "https://images.unsplash.com/photo-1494783367193-149034c05e8f?auto=format&fit=crop&w=900&q=80", cost: 31, distance: "50 km", duration: "1 Tag", difficulty: "easy", transport: "RE + Bus", nights: "Tagestrip", description: "Früh los, hoch zum Baumwipfelpfad und zurück an die Saar – klein, aber sehr draußen.", route: ["08:00 — Saarbrücken → Mettlach", "09:30 — Tafeltour zur Saarschleife", "13:00 — Picknick am Aussichtspunkt", "17:00 — Saarufer & Rückfahrt"], costs: [{ label: "Bahn & Bus", value: "18 €" }, { label: "Eintritt", value: "8 €" }, { label: "Essen", value: "5 €" }], gear: ["Wasser", "Sonnencreme", "Decke", "Kamera"], accent: "clay" }),
+  makeTrip({ id: "saxony", title: "Sachsen: Sächsische Schweiz", region: "Sachsen", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80", cost: 38, distance: "190 km", duration: "2 Tage", difficulty: "medium", transport: "EC + S-Bahn", nights: "1 Nacht", description: "Sandstein, Nebel über der Elbe und ein Aussichtspunkt, der sich nach mehr anfühlt als 38 €.", route: ["Sa · 06:45 — Dresden → Schmilka", "Sa · 10:30 — Malerweg bis Papststein", "Sa · 17:00 — Zeltplatz am Lilienstein", "So · 07:30 — Sonnenaufgang an der Bastei"], costs: [{ label: "Zug & Fähre", value: "22 €" }, { label: "Zeltplatz", value: "10 €" }, { label: "Proviant", value: "6 €" }], gear: ["Feste Schuhe", "Stirnlampe", "Kleines Zelt", "Offline-Karte"], accent: "pine" }),
+  makeTrip({ id: "saxony-anhalt", title: "Sachsen-Anhalt: Harz auf Nebenwegen", region: "Sachsen-Anhalt", image: "https://images.unsplash.com/photo-1511497584788-876760111969?auto=format&fit=crop&w=900&q=80", cost: 35, distance: "115 km", duration: "2 Tage", difficulty: "medium", transport: "RE + Bus", nights: "1 Nacht", description: "Fichtenwald, Granit und ein ruhigerer Weg zum Brocken – Harz ohne Gipfelstress.", route: ["Sa · 07:00 — Magdeburg → Wernigerode", "Sa · 10:30 — Ilsestein-Runde", "Sa · 17:30 — Trekkingplatz am Wald", "So · 08:00 — Torfhaus & Heimfahrt"], costs: [{ label: "Bahn & Bus", value: "19 €" }, { label: "Trekkingplatz", value: "9 €" }, { label: "Essen", value: "7 €" }], gear: ["Warme Schicht", "Wanderschuhe", "Wasser", "Kopflampe"], accent: "saffron" }),
+  makeTrip({ id: "schleswig", title: "Schleswig-Holstein: Ostseeküste", region: "Schleswig-Holstein", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80", cost: 32, distance: "90 km", duration: "2 Tage", difficulty: "easy", transport: "RE + Rad", nights: "1 Nacht", description: "Steilküste, Wind und eine Nacht im Zelt – die Ostsee ist näher als dein Fernweh.", route: ["Sa · 08:00 — Kiel → Eckernförde", "Sa · 10:00 — Küstenweg nach Schwedeneck", "Sa · 17:00 — Camping an der Bucht", "So · 09:00 — Strandrunde & Regionalbahn"], costs: [{ label: "Bahn", value: "16 €" }, { label: "Camping", value: "10 €" }, { label: "Proviant", value: "6 €" }], gear: ["Windjacke", "Badesachen", "Zelt", "Powerbank"], accent: "clay" }),
+  makeTrip({ id: "thuringia", title: "Thüringen: Rennsteig-Starter", region: "Thüringen", image: "https://images.unsplash.com/photo-1521336575822-6da63fb45455?auto=format&fit=crop&w=900&q=80", cost: 30, distance: "120 km", duration: "2 Tage", difficulty: "medium", transport: "RE + Bus", nights: "1 Nacht", description: "Moosige Pfade und Höhenluft im Thüringer Wald – der perfekte erste Fernwander-Schritt.", route: ["Sa · 07:30 — Erfurt → Ilmenau", "Sa · 10:30 — Rennsteig Richtung Schmücke", "Sa · 18:00 — Jugendherberge oder Trekkingplatz", "So · 08:30 — Kickelhahn & Rückfahrt"], costs: [{ label: "Bahn & Bus", value: "18 €" }, { label: "Schlafen", value: "7 €" }, { label: "Essen", value: "5 €" }], gear: ["Wanderschuhe", "Regenlayer", "Isomatte", "Wasser"], accent: "pine" }),
 ];
 
 const filterOptions: FilterName[] = ["Alle", "Unter 30 €", "Mit ÖPNV", "Eine Nacht"];
@@ -197,7 +128,7 @@ function TripCard({ trip, onOpen }: { trip: Trip; onOpen: (trip: Trip) => void }
 }
 
 export default function Home() {
-  const [location, setLocation] = useState("Berlin");
+  const [location, setLocation] = useState("Deutschland");
   const [budget, setBudget] = useState(60);
   const [activeFilter, setActiveFilter] = useState<FilterName>("Alle");
   const [sortBy, setSortBy] = useState("budget");
@@ -208,7 +139,7 @@ export default function Home() {
   const filteredTrips = useMemo(() => {
     const query = location.trim().toLowerCase();
     const filtered = trips.filter((trip) => {
-      const matchesLocation = !query || trip.region.toLowerCase().includes(query) || "berlin".includes(query);
+      const matchesLocation = !query || query === "deutschland" || trip.region.toLowerCase().includes(query) || trip.title.toLowerCase().includes(query);
       const matchesBudget = trip.cost <= budget;
       const matchesFilter =
         activeFilter === "Alle" ||
@@ -229,7 +160,9 @@ export default function Home() {
     event.preventDefault();
     setPlannerMessage(
       location.trim()
-        ? `Alles klar. Ich suche günstige Wochenendideen ab ${location.trim()} unter ${budget} €.`
+        ? location.trim().toLowerCase() === "deutschland"
+          ? `Alles klar. Ich zeige dir günstige Wochenendideen in ganz Deutschland unter ${budget} €.`
+          : `Alles klar. Ich suche günstige Wochenendideen ab ${location.trim()} unter ${budget} €.`
         : "Trag einen Startort ein – dann kann die Sidequest losgehen."
     );
     document.getElementById("abenteuer")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -272,12 +205,12 @@ export default function Home() {
         </div>
         <div className="hero-content">
           <div className="eyebrow"><span className="eyebrow-marker" /> Wochenendmodus: an</div>
-          <h1>Raus aus dem Feed.<br /><em>Rein in den Wald.</em></h1>
-          <p className="hero-lede">Günstige Abenteuer, die wirklich ab deiner Haustür starten. Mit groben Routen, ehrlichen Kosten und einer Packliste, die nicht nach Expedition aussieht.</p>
+          <h1>Raus aus dem Feed.<br /><em>Rein in die Wildnis.</em></h1>
+          <p className="hero-lede">Günstige Abenteuer in allen 16 Bundesländern, die wirklich ab deiner Haustür starten. Mit groben Routen, ehrlichen Kosten und einer Packliste, die nicht nach Expedition aussieht.</p>
           <button className="hero-cta" onClick={scrollToPlanner}>Sidequest planen <ArrowUpRight size={19} /></button>
           <div className="hero-note"><span>01</span><span className="hero-note-rule" /><span>für kleine Budgets<br />und große Neugier</span></div>
           <div className="hero-facts" aria-label="Planungsfakten">
-            <span><MapPin size={14} /> ab Berlin</span>
+            <span><MapPin size={14} /> deutschlandweit</span>
             <span><CircleDollarSign size={14} /> ab 24 €</span>
             <span><TrainFront size={14} /> mit ÖPNV</span>
             <span><CalendarDays size={14} /> 1–2 Tage</span>
@@ -301,8 +234,11 @@ export default function Home() {
           </div>
           <form className="planner-form" onSubmit={handlePlanSubmit}>
             <label className="planner-field planner-field-location">
-              <span><MapPin size={15} /> Startort</span>
-              <input value={location} onChange={(event) => setLocation(event.target.value)} placeholder="z. B. Berlin" aria-label="Startort" />
+              <span><MapPin size={15} /> Startort oder Bundesland</span>
+              <input list="bundesland-options" value={location} onChange={(event) => setLocation(event.target.value)} placeholder="z. B. Berlin oder Bayern" aria-label="Startort oder Bundesland" />
+              <datalist id="bundesland-options">
+                {['Deutschland', 'Baden-Württemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen', 'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz', 'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein', 'Thüringen'].map((state) => <option key={state} value={state} />)}
+              </datalist>
             </label>
             <label className="planner-field planner-field-budget">
               <span><CircleDollarSign size={15} /> Max. pro Person</span>
@@ -319,14 +255,14 @@ export default function Home() {
             <button className="planner-submit" type="submit">Abenteuer zeigen <ChevronRight size={18} /></button>
           </form>
           {plannerMessage && <div className="planner-message" role="status"><Check size={16} /> {plannerMessage}</div>}
-          <div className="planner-footnote"><span className="footnote-star">✳</span> Die Preise sind Schätzwerte pro Person für ein Wochenende. Lieber etwas Puffer einplanen.</div>
+          <div className="planner-footnote"><span className="footnote-star">✳</span> 16 Bundesländer, 16 Einstiege. Die Preise sind Schätzwerte pro Person – lieber etwas Puffer einplanen.</div>
         </div>
       </section>
 
       <section className="adventures-section" id="abenteuer">
         <div className="adventures-topline">
           <div>
-            <div className="eyebrow eyebrow-dark"><span className="eyebrow-marker" /> sidequests in deiner nähe</div>
+            <div className="eyebrow eyebrow-dark"><span className="eyebrow-marker" /> sidequests in deutschland</div>
             <h2>Gute Ideen.<br /><em>Kleines Budget.</em></h2>
           </div>
           <div className="result-count"><strong>{filteredTrips.length.toString().padStart(2, "0")}</strong><span>Pläne<br />gefunden</span></div>
