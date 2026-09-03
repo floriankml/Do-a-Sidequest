@@ -2,15 +2,54 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowRight, ArrowUpRight, Backpack, Bike, Check, ChevronLeft, ChevronRight, CircleDollarSign,
-  Clock3, Compass, Dice5, Dumbbell, ExternalLink, Flame, Gamepad2, Map, Menu, Mountain,
-  Palette, Pizza, RotateCcw, Route, Sparkles, Star, Tent, TrainFront, Users, X, Zap,
-  Award, BookOpen, Gift, LockKeyhole, Medal, Trophy,
+  ArrowRight,
+  ArrowUpRight,
+  Backpack,
+  Bike,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+  CircleDollarSign,
+  Clock3,
+  Compass,
+  Dice5,
+  Dumbbell,
+  ExternalLink,
+  Flame,
+  Gamepad2,
+  Map,
+  Menu,
+  Mountain,
+  Palette,
+  Pizza,
+  RotateCcw,
+  Route,
+  Sparkles,
+  Star,
+  Tent,
+  TrainFront,
+  Users,
+  X,
+  Zap,
+  Award,
+  BookOpen,
+  Gift,
+  LockKeyhole,
+  Medal,
+  Trophy,
   type LucideIcon,
 } from "lucide-react";
 
 export type Difficulty = "easy" | "medium" | "hard";
-export type QuestCategory = "Outdoor" | "Explore" | "Friends" | "Challenge" | "Creative" | "Food" | "Spontaneous" | "Random";
+export type QuestCategory =
+  | "Outdoor"
+  | "Explore"
+  | "Friends"
+  | "Challenge"
+  | "Creative"
+  | "Food"
+  | "Spontaneous"
+  | "Random";
 export type FilterName = "Alle" | "Unter 30 €" | "Mit ÖPNV" | "Eine Nacht";
 
 export type Trip = {
@@ -41,121 +80,1877 @@ export type Trip = {
   accent: string;
 };
 
-const imgForest = "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80";
-const imgLake = "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80";
-const imgCity = "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80";
-const imgDawn = "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80";
-const imgTrain = "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=900&q=80";
-const imgFood = "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80";
-const imgBike = "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=900&q=80";
-const imgCamera = "https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?auto=format&fit=crop&w=900&q=80";
+const imgForest =
+  "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=900&q=80";
+const imgLake =
+  "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=80";
+const imgCity =
+  "https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80";
+const imgDawn =
+  "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?auto=format&fit=crop&w=900&q=80";
+const imgTrain =
+  "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=900&q=80";
+const imgFood =
+  "https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=900&q=80";
+const imgBike =
+  "https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=900&q=80";
+const imgCamera =
+  "https://images.unsplash.com/photo-1452780212940-6f5c0d14d848?auto=format&fit=crop&w=900&q=80";
 
-const links = [{ label: "Inspiration öffnen", href: "https://www.komoot.com/" }];
-const makeQuest = (quest: Omit<Trip, "links"> & { links?: Trip["links"] }): Trip => ({ ...quest, links: quest.links ?? links });
+const links = [
+  { label: "Inspiration öffnen", href: "https://www.komoot.com/" },
+];
+const makeQuest = (
+  quest: Omit<Trip, "links"> & { links?: Trip["links"] }
+): Trip => ({ ...quest, links: quest.links ?? links });
 
 export const trips: Trip[] = [
-  makeQuest({ id: "sunrise", questNo: "001", title: "Catch the Sunrise", region: "deine Umgebung", image: imgDawn, cost: 0, distance: "0–15 km", duration: "3–5 Stunden", durationHours: 5, difficulty: "easy", transport: "zu Fuß + ÖPNV", nights: "Tagestrip", description: "Starte deinen Tag, bevor die Stadt aufwacht.", mission: "Finde einen Ort in deiner Umgebung, an dem du den Sonnenaufgang sehen kannst.", rules: ["Vor Sonnenaufgang losgehen", "Kein Auto benutzen", "Frühstück mitnehmen", "Ein Foto als Erinnerung machen"], reward: "Du hast deinen Tag begonnen, bevor die meisten Menschen überhaupt aufgestanden sind.", players: "1–4 Spieler", playerMode: "solo", surprise: 4, category: "Outdoor", route: ["05:00 — Haustür → Aussichtspunkt", "05:45 — Sonnenaufgang suchen", "07:00 — Frühstück auf der Bank", "08:30 — Mit neuem Tag nach Hause"], costs: [{ label: "Anreise", value: "0 €" }, { label: "Frühstück", value: "0 €" }], gear: ["Thermoskanne", "Warme Schicht", "Offline-Karte", "Decke"], accent: "sun" }),
-  makeQuest({ id: "random-train", questNo: "002", title: "The Random Train Challenge", region: "deutschlandweit", image: imgTrain, cost: 0, distance: "ab Bahnhof", duration: "3–6 Stunden", durationHours: 6, difficulty: "medium", transport: "Regionalzug", nights: "Tagestrip", description: "Einsteigen, aussteigen, drei Stunden lang neugierig sein.", mission: "Steige mit deinem Deutschlandticket in einen Zug und an einer zufälligen Station aus. Erkunde den Ort für drei Stunden.", rules: ["Ziel per Zufall bestimmen", "Erst vor Ort googeln", "Drei Orte entdecken", "Eine Postkarte oder Notiz mitnehmen"], reward: "Du warst heute irgendwo, wo du gestern noch nie hinwolltest.", players: "1–4 Spieler", playerMode: "group", surprise: 5, category: "Explore", route: ["11:00 — Bahnhof → Zufallszug", "12:00 — Ankunft ohne Plan", "12:15 — Drei Fundstücke suchen", "15:30 — Rückfahrt mit Story"], costs: [{ label: "Regionalzug", value: "0 €" }, { label: "Snack", value: "5 €" }], gear: ["Deutschlandticket", "Powerbank", "Notizbuch", "Snack"], accent: "blue" }),
-  makeQuest({ id: "food-ten", questNo: "003", title: "10€ Food Challenge", region: "deine Stadt", image: imgFood, cost: 10, distance: "0–8 km", duration: "2–4 Stunden", durationHours: 4, difficulty: "easy", transport: "zu Fuß + ÖPNV", nights: "Tagestrip", description: "Drei Spots. Zehn Euro. Ein Siegergericht.", mission: "Du und deine Freunde haben jeweils maximal 10 €. Findet das interessanteste Essen in eurer Stadt.", rules: ["Budget vorher auf den Tisch legen", "Drei Mini-Portionen statt ein Menü", "Bewertet Geschmack, Story und Preis", "Gewinnergericht fotografieren"], reward: "Ihr habt aus Kleingeld eine neue Lieblingsgeschichte gemacht.", players: "2–6 Spieler", playerMode: "friends", surprise: 3, category: "Food", route: ["12:00 — Treffpunkt am Bahnhof", "12:30 — Spot 01 per Münzwurf", "14:00 — Spot 02 + Spot 03", "16:00 — Jury & Gewinner"], costs: [{ label: "Essen", value: "10 €" }], gear: ["10-Euro-Schein", "Notizen-App", "Wasserflasche", "Gute Laune"], accent: "orange" }),
-  makeQuest({ id: "no-maps", questNo: "004", title: "No Google Maps", region: "deine Stadt", image: imgCity, cost: 0, distance: "0–10 km", duration: "3–5 Stunden", durationHours: 5, difficulty: "medium", transport: "zu Fuß + ÖPNV", nights: "Tagestrip", description: "Ein Stadtteil, den du nur aus dem Augenwinkel kennst.", mission: "Erkunde einen neuen Stadtteil oder Ort für mehrere Stunden – ohne Google Maps.", rules: ["Handy auf Flugmodus", "An jeder Kreuzung abstimmen", "Eine Person fragen, wo es langgeht", "Einen Ort finden, der nicht im Feed war"], reward: "Du kennst deine eigene Stadt jetzt ein kleines Stück besser.", players: "1–4 Spieler", playerMode: "solo", surprise: 4, category: "Explore", route: ["13:00 — Start an einer unbekannten Haltestelle", "14:00 — Ohne Karte abbiegen", "16:00 — Fundstück im neuen Viertel", "17:30 — Rückweg nach Gefühl"], costs: [{ label: "ÖPNV", value: "0–5 €" }], gear: ["Handy auf Flugmodus", "Kamera", "Bargeld", "Kleine Karte aus Papier"], accent: "violet" }),
-  makeQuest({ id: "photo-hunt", questNo: "005", title: "Photo Hunt", region: "deine Stadt", image: imgCamera, cost: 0, distance: "0–8 km", duration: "2–4 Stunden", durationHours: 4, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "15 Motive. Eine Kamera. Kein endloses Scrollen.", mission: "Erstelle eine Liste mit 15 Dingen, die du fotografieren musst. Wer zuerst alles findet, gewinnt.", rules: ["Motive gemeinsam festlegen", "Keine Stockfotos", "Jede Person muss fünf Motive finden", "Am Ende eine Sieger-Collage bauen"], reward: "Deine Stadt sieht plötzlich aus wie ein Set.", players: "2–6 Spieler", playerMode: "friends", surprise: 3, category: "Creative", route: ["14:00 — Motive ziehen", "14:15 — Hunt beginnt", "16:00 — Zwischencheck am Kiosk", "17:00 — Collage & Sieger"], costs: [{ label: "Anreise", value: "0 €" }, { label: "Kiosk", value: "3 €" }], gear: ["Handy oder Kamera", "Motive-Liste", "Powerbank", "Stift"], accent: "pink" }),
-  makeQuest({ id: "bike-nowhere", questNo: "006", title: "Bike to Nowhere", region: "deine Umgebung", image: imgBike, cost: 5, distance: "0–25 km", duration: "3–6 Stunden", durationHours: 6, difficulty: "medium", transport: "Fahrrad", nights: "Tagestrip", description: "Jede Kreuzung ist eine Entscheidung.", mission: "Fahrt mit dem Fahrrad los und entscheidet an jeder Kreuzung per Münzwurf, wohin ihr fahrt.", rules: ["Münze entscheidet links oder rechts", "Nach 45 Minuten Pause machen", "Nicht auf Hauptstraßen riskieren", "Am Ende einen Namen für die Route finden"], reward: "Ihr seid nicht verloren. Ihr seid auf einer selbst erfundenen Strecke.", players: "2–4 Spieler", playerMode: "friends", surprise: 5, category: "Friends", route: ["11:00 — Fahrräder checken", "11:30 — Erste Münze", "13:00 — Picknick am Zufallsort", "16:00 — Mit letzter Münze heim"], costs: [{ label: "Snacks", value: "5 €" }], gear: ["Fahrrad", "Helm", "Mini-Pumpe", "Münze"], accent: "green" }),
-  makeQuest({ id: "five-am", questNo: "007", title: "The 5 AM Challenge", region: "deine Umgebung", image: imgForest, cost: 0, distance: "0–12 km", duration: "4–6 Stunden", durationHours: 6, difficulty: "hard", transport: "zu Fuß + ÖPNV", nights: "Tagestrip", description: "Mach etwas, das du sonst nie vor Schule oder Arbeit tun würdest.", mission: "Steht früh auf und macht gemeinsam etwas, das ihr normalerweise nie vor dem Tag tun würdet.", rules: ["Wecker nicht snoozen", "Kein Handy bis nach dem Frühstück", "Etwas Neues ausprobieren", "Um 09:00 Uhr ehrlich bewerten"], reward: "Der frühe Morgen gehört jetzt zu euch.", players: "2–4 Spieler", playerMode: "friends", surprise: 4, category: "Challenge", route: ["05:00 — Treffpunkt", "05:30 — Mission starten", "07:00 — Frühstück draußen", "09:00 — Tagesstart mit Vorsprung"], costs: [{ label: "Frühstück", value: "0–5 €" }], gear: ["Wecker", "Warme Schicht", "Thermoskanne", "Mut"], accent: "red" }),
-  makeQuest({ id: "unknown", questNo: "008", title: "Unknown Destination", region: "deutschlandweit", image: imgLake, cost: 15, distance: "ab Bahnhof", duration: "6–10 Stunden", durationHours: 10, difficulty: "medium", transport: "Regionalzug", nights: "Tagestrip", description: "Eine Person plant. Alle anderen erfahren es unterwegs.", mission: "Eine Person plant das Ziel, die anderen erfahren erst unterwegs, wohin es geht.", rules: ["Nur eine Person kennt den Zielort", "Hinweise erst an Haltestellen", "Alle akzeptieren die Überraschung", "Am Ende ein Gruppenfoto"], reward: "Ihr habt einen Ort besucht, den niemand vorgeschlagen hätte.", players: "3–6 Spieler", playerMode: "group", surprise: 5, category: "Random", route: ["09:00 — Treffpunkt am Bahnhof", "09:30 — Erster Hinweis", "11:00 — Ziel enthüllt", "18:00 — Heimfahrt mit Story"], costs: [{ label: "Zug", value: "0 €" }, { label: "Essen", value: "15 €" }], gear: ["Ticket", "Powerbank", "Snack", "Umschlag mit Hinweisen"], accent: "blue" }),
-  makeQuest({ id: "museum-speedrun", questNo: "009", title: "Museum Speedrun", region: "deine Stadt", image: imgCity, cost: 8, distance: "0–10 km", duration: "2–4 Stunden", durationHours: 4, difficulty: "easy", transport: "ÖPNV", nights: "Tagestrip", description: "Ein Museum, aber mit eigener Spielregel.", mission: "Besucht ein Museum und findet in 60 Minuten das seltsamste, schönste und unterschätzteste Objekt.", rules: ["Jede Person wählt ein Objekt", "Keine Audioguides", "Eine Story dazu erfinden", "Am Ausgang abstimmen"], reward: "Du hast Kultur nicht konsumiert. Du hast sie gespielt.", players: "1–4 Spieler", playerMode: "friends", surprise: 3, category: "Creative", route: ["14:00 — Museum wählen", "14:30 — Speedrun startet", "15:30 — Objektgeschichten", "16:00 — Jury am Café"], costs: [{ label: "Eintritt", value: "8 €" }], gear: ["Handy", "Notizen", "Bargeld", "Offener Blick"], accent: "violet" }),
-  makeQuest({ id: "hill-rep", questNo: "010", title: "Hill Rep Roulette", region: "deine Umgebung", image: imgForest, cost: 0, distance: "0–8 km", duration: "1–3 Stunden", durationHours: 3, difficulty: "hard", transport: "zu Fuß", nights: "Tagestrip", description: "Finde den nächsten Hügel und mach daraus ein Level.", mission: "Sucht euch eine Steigung und würfelt aus, wie viele Runden ihr schafft. Jede Runde bekommt einen Codenamen.", rules: ["Gemeinsam warm machen", "Pausen sind Teil der Mission", "Nicht über die eigene Grenze gehen", "Cooldown und Wasser nicht vergessen"], reward: "Du hast deinem inneren Schweinehund einen neuen Highscore gegeben.", players: "1–4 Spieler", playerMode: "solo", surprise: 3, category: "Challenge", route: ["16:00 — Hügel finden", "16:15 — Warm-up", "16:30 — Würfel bestimmt Runden", "17:30 — Highscore notieren"], costs: [{ label: "Anreise", value: "0 €" }], gear: ["Wasser", "Sportschuhe", "Timer", "Handtuch"], accent: "red" }),
-  makeQuest({ id: "market-only", questNo: "011", title: "One Market Dinner", region: "deine Stadt", image: imgFood, cost: 12, distance: "0–8 km", duration: "2–4 Stunden", durationHours: 4, difficulty: "easy", transport: "zu Fuß + ÖPNV", nights: "Tagestrip", description: "Kocht ein Dinner, das nur aus einem Markt besteht.", mission: "Jede Person kauft auf dem Wochenmarkt eine Zutat. Gemeinsam kocht ihr daraus ein Abendessen.", rules: ["Pro Person genau eine Zutat", "Budgetlimit vorher setzen", "Nichts online nachbestellen", "Rezept erst nach dem Einkauf erfinden"], reward: "Aus zufälligen Zutaten wurde euer bestes improvisiertes Dinner.", players: "2–6 Spieler", playerMode: "friends", surprise: 4, category: "Food", route: ["17:00 — Markt treffen", "17:15 — Zutaten ziehen", "18:00 — Küche improvisieren", "19:30 — Dinner & Bewertung"], costs: [{ label: "Zutaten", value: "12 €" }], gear: ["Stoffbeutel", "Notizen", "Kochmöglichkeit", "Hunger"], accent: "orange" }),
-  makeQuest({ id: "postcard", questNo: "012", title: "Send a Real Postcard", region: "deine Umgebung", image: imgDawn, cost: 3, distance: "0–12 km", duration: "1–3 Stunden", durationHours: 3, difficulty: "easy", transport: "zu Fuß + ÖPNV", nights: "Tagestrip", description: "Schreib jemandem, bevor du wieder scrollst.", mission: "Finde einen schönen Ort, kaufe eine Postkarte und schreib einer Person, von der du lange nichts gehört hast.", rules: ["Text handschriftlich schreiben", "Kein Copy-Paste", "Karte noch heute einwerfen", "Ort auf der Rückseite notieren"], reward: "Du hast eine kleine Zeitkapsel in die Welt geschickt.", players: "1–2 Spieler", playerMode: "solo", surprise: 2, category: "Spontaneous", route: ["15:00 — Postkarte finden", "15:30 — Lieblingsort suchen", "16:00 — Schreiben", "16:30 — Briefkasten finden"], costs: [{ label: "Karte & Porto", value: "3 €" }], gear: ["Stift", "Bargeld", "Jacke", "Neugier"], accent: "pink" }),
-  makeQuest({ id: "tiny-zine", questNo: "013", title: "Make a Tiny Zine", region: "deine Stadt", image: imgCamera, cost: 0, distance: "0–5 km", duration: "1–2 Stunden", durationHours: 2, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Ein Mini-Magazin über genau diesen Tag.", mission: "Falte ein Blatt Papier zu einem Mini-Zine und fülle jede Seite mit einer Beobachtung, Zeichnung oder absurden Schlagzeile.", rules: ["Nur ein Blatt Papier", "Mindestens eine Zeichnung", "Eine Schlagzeile über einen Fremden-Ort", "Zine verschenken oder auslegen"], reward: "Du hast aus einem leeren Blatt eine kleine Welt gebaut.", players: "1–2 Spieler", playerMode: "solo", surprise: 3, category: "Creative", route: ["14:00 — Papier und Stift finden", "14:15 — Sechs Seiten füllen", "15:00 — Cover gestalten", "15:30 — Zine weitergeben"], costs: [{ label: "Material", value: "0 €" }], gear: ["Papier", "Stift", "Klebeband", "Neugier"], accent: "violet" }),
-  makeQuest({ id: "soundwalk", questNo: "014", title: "Soundwalk", region: "deine Umgebung", image: imgForest, cost: 0, distance: "0–8 km", duration: "1–3 Stunden", durationHours: 3, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Hör deine Umgebung wie einen Film.", mission: "Lauft eine bekannte Strecke ohne Musik und sammelt zehn Geräusche. Gebt jedem Sound einen Filmtitel.", rules: ["Kopfhörer bleiben zu Hause", "Zehn Sounds notieren", "Mindestens ein Naturgeräusch", "Am Ende Soundtrack-Reihenfolge bauen"], reward: "Deine vertraute Strecke hat plötzlich einen Soundtrack.", players: "1–4 Spieler", playerMode: "friends", surprise: 4, category: "Creative", route: ["16:00 — Startpunkt wählen", "16:15 — Geräusch 01–05", "17:00 — Geräusch 06–10", "17:30 — Soundtrack benennen"], costs: [{ label: "Anreise", value: "0 €" }], gear: ["Notizen-App", "Wasser", "Bequeme Schuhe", "Stille"], accent: "pink" }),
-  makeQuest({ id: "color-hunt", questNo: "015", title: "Color Hunt", region: "deine Stadt", image: imgCity, cost: 0, distance: "0–6 km", duration: "1–3 Stunden", durationHours: 3, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Eine Farbe. Zehn Fundstücke. Neue Augen.", mission: "Wählt eine Farbe und findet zehn Dinge in genau diesem Ton. Am Ende baut ihr daraus eine Foto-Collage.", rules: ["Farbe vorher festlegen", "Keine Online-Bilder", "Mindestens ein Fundstück übersehen", "Collage im Gruppenchat teilen"], reward: "Du siehst deine Stadt jetzt in einer neuen Farbe.", players: "1–4 Spieler", playerMode: "friends", surprise: 3, category: "Creative", route: ["15:00 — Farbe würfeln", "15:15 — Hunt starten", "16:15 — Zwischenstand", "17:00 — Collage bauen"], costs: [{ label: "Anreise", value: "0 €" }], gear: ["Handy", "Farbwürfel oder Zufallszahl", "Powerbank", "Wasser"], accent: "violet" }),
-  makeQuest({ id: "blind-menu", questNo: "016", title: "Blind Menu", region: "deine Stadt", image: imgFood, cost: 8, distance: "0–5 km", duration: "1–3 Stunden", durationHours: 3, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Bestellt etwas, dessen Namen ihr nicht kennt.", mission: "Geht in einen Laden oder ein Café und bestellt jeweils eine Sache, die ihr noch nie probiert habt.", rules: ["Budget vorher festlegen", "Eine Person darf die Karte erklären", "Erst probieren, dann googeln", "Ehrliche 1–10-Bewertung"], reward: "Ein kleiner Mutmoment schmeckt besser als Routine.", players: "2–4 Spieler", playerMode: "friends", surprise: 4, category: "Food", route: ["18:00 — Ort auswählen", "18:15 — Blind bestellen", "18:45 — Probieren", "19:15 — Bewertungsrunde"], costs: [{ label: "Essen oder Getränk", value: "8 €" }], gear: ["8 €", "Notizen", "Offener Geschmack", "Wasser"], accent: "orange" }),
-  makeQuest({ id: "future-letter", questNo: "017", title: "Letter to Future You", region: "deine Umgebung", image: imgDawn, cost: 0, distance: "0–5 km", duration: "1–2 Stunden", durationHours: 2, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Eine Nachricht, die erst später ankommt.", mission: "Schreib dir selbst einen Brief mit drei Dingen, die du gerade fühlst, und verstecke ihn für einen Monat.", rules: ["Handschriftlich schreiben", "Konkreten Ort wählen", "Öffnungsdatum festlegen", "Nicht vorher nachsehen"], reward: "Du hast deinem zukünftigen Ich ein Fundstück hinterlassen.", players: "1 Spieler", playerMode: "solo", surprise: 2, category: "Spontaneous", route: ["Heute — ruhigen Ort suchen", "Heute — Brief schreiben", "Heute — sicher verstecken", "In 30 Tagen — öffnen"], costs: [{ label: "Material", value: "0 €" }], gear: ["Papier", "Umschlag", "Stift", "Kalender"], accent: "pink" }),
-  makeQuest({ id: "street-museum", questNo: "018", title: "Street Museum", region: "deine Stadt", image: imgCamera, cost: 0, distance: "0–8 km", duration: "1–3 Stunden", durationHours: 3, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Kuratiert eure eigene Ausstellung.", mission: "Findet fünf unscheinbare Dinge auf der Straße und schreibt kleine Museumslabels dazu.", rules: ["Nichts berühren oder verschieben", "Jedes Label braucht einen Titel", "Eine Person ist Kurator:in", "Ausstellung gemeinsam ablaufen"], reward: "Du hast Alltagskram in Kunst verwandelt.", players: "1–4 Spieler", playerMode: "friends", surprise: 4, category: "Creative", route: ["15:00 — Viertel wählen", "15:20 — Fundstück 01–03", "16:00 — Labels schreiben", "16:30 — Ausstellung eröffnen"], costs: [{ label: "Anreise", value: "0 €" }], gear: ["Notizbuch", "Stift", "Handy", "Respekt für den Ort"], accent: "violet" }),
-  makeQuest({ id: "coin-cinema", questNo: "019", title: "Coin-Flip Cinema", region: "deine Stadt", image: imgCity, cost: 0, distance: "0–5 km", duration: "2–4 Stunden", durationHours: 4, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Ein Filmabend mit Zufallsregeln.", mission: "Wählt drei Filme nach Zufall aus und entscheidet per Münzwurf, welcher heute läuft. Snacks bekommen ebenfalls eine Regel.", rules: ["Keine Trailer vorher", "Münze entscheidet", "Snack-Farbe auswürfeln", "Nachher eine Drei-Satz-Rezension"], reward: "Aus einem normalen Abend wurde ein kleines Festival.", players: "2–6 Spieler", playerMode: "group", surprise: 4, category: "Random", route: ["19:00 — Filmliste bauen", "19:15 — Münzwurf", "19:30 — Snacks besorgen", "20:00 — Screening & Review"], costs: [{ label: "Snacks", value: "0–8 €" }], gear: ["Münze", "Decke", "Snacks", "Streaming oder Bibliothek"], accent: "blue" }),
-  makeQuest({ id: "kindness-bingo", questNo: "020", title: "Kindness Bingo", region: "deine Umgebung", image: imgLake, cost: 0, distance: "0–8 km", duration: "1–3 Stunden", durationHours: 3, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Kleine gute Dinge als Mission.", mission: "Erstellt ein Bingo mit zehn freundlichen, respektvollen Aktionen, die niemanden in eine unangenehme Situation bringen.", rules: ["Niemand filmen", "Keine Gegenleistung erwarten", "Grenzen respektieren", "Am Ende gemeinsam reflektieren"], reward: "Du hast deinen Tag und vielleicht den einer anderen Person heller gemacht.", players: "1–4 Spieler", playerMode: "friends", surprise: 4, category: "Friends", route: ["15:00 — Bingo erstellen", "15:15 — Zwei Stunden spielen", "17:15 — Felder abhaken", "17:30 — Lieblingsmoment teilen"], costs: [{ label: "Anreise", value: "0 €" }], gear: ["Papier", "Stift", "Wasser", "Respekt"], accent: "green" }),
-  makeQuest({ id: "one-hour-masterpiece", questNo: "021", title: "One-Hour Masterpiece", region: "deine Umgebung", image: imgCamera, cost: 0, distance: "0–3 km", duration: "1–2 Stunden", durationHours: 2, difficulty: "easy", transport: "zu Fuß", nights: "Tagestrip", description: "Ein Werk, eine Stunde, kein Anspruch.", mission: "Erstelle in 60 Minuten ein Bild, Gedicht, Lied oder Objekt über den Ort, an dem du gerade bist.", rules: ["Timer auf 60 Minuten", "Kein Tutorial öffnen", "Unfertig ist erlaubt", "Werk am Ende benennen"], reward: "Du hast etwas gemacht, statt nur etwas anzufangen.", players: "1–4 Spieler", playerMode: "solo", surprise: 3, category: "Creative", route: ["16:00 — Material wählen", "16:05 — Timer starten", "17:05 — Werk signieren", "17:15 — Mini-Ausstellung"], costs: [{ label: "Material", value: "0 €" }], gear: ["Papier oder Restmaterial", "Stift", "Timer", "Mut zum Unperfekten"], accent: "pink" }),
-  makeQuest({ id: "three-stop-story", questNo: "022", title: "Three-Stop Story", region: "deine Stadt", image: imgTrain, cost: 5, distance: "0–12 km", duration: "2–4 Stunden", durationHours: 4, difficulty: "easy", transport: "ÖPNV", nights: "Tagestrip", description: "Drei Haltestellen, eine erfundene Geschichte.", mission: "Steigt an drei zufälligen Haltestellen aus und sammelt jeweils ein Detail für eine gemeinsame Kurzgeschichte.", rules: ["Haltestellen per Zufall wählen", "Pro Stopp ein Detail notieren", "Keine Recherche bis zum Schluss", "Geschichte gemeinsam vorlesen"], reward: "Euer Nachmittag hat jetzt eine Handlung.", players: "2–4 Spieler", playerMode: "friends", surprise: 5, category: "Explore", route: ["14:00 — Drei Haltestellen losen", "14:30 — Detail 01", "15:30 — Detail 02", "16:30 — Detail 03 & Story"], costs: [{ label: "ÖPNV", value: "0–5 €" }], gear: ["Ticket", "Notizen", "Stift", "Fantasie"], accent: "blue" }),
+  makeQuest({
+    id: "sunrise",
+    questNo: "001",
+    title: "Catch the Sunrise",
+    region: "deine Umgebung",
+    image: imgDawn,
+    cost: 0,
+    distance: "0–15 km",
+    duration: "3–5 Stunden",
+    durationHours: 5,
+    difficulty: "easy",
+    transport: "zu Fuß + ÖPNV",
+    nights: "Tagestrip",
+    description: "Starte deinen Tag, bevor die Stadt aufwacht.",
+    mission:
+      "Finde einen Ort in deiner Umgebung, an dem du den Sonnenaufgang sehen kannst.",
+    rules: [
+      "Vor Sonnenaufgang losgehen",
+      "Kein Auto benutzen",
+      "Frühstück mitnehmen",
+      "Ein Foto als Erinnerung machen",
+    ],
+    reward:
+      "Du hast deinen Tag begonnen, bevor die meisten Menschen überhaupt aufgestanden sind.",
+    players: "1–4 Spieler",
+    playerMode: "solo",
+    surprise: 4,
+    category: "Outdoor",
+    route: [
+      "05:00 — Haustür → Aussichtspunkt",
+      "05:45 — Sonnenaufgang suchen",
+      "07:00 — Frühstück auf der Bank",
+      "08:30 — Mit neuem Tag nach Hause",
+    ],
+    costs: [
+      { label: "Anreise", value: "0 €" },
+      { label: "Frühstück", value: "0 €" },
+    ],
+    gear: ["Thermoskanne", "Warme Schicht", "Offline-Karte", "Decke"],
+    accent: "sun",
+  }),
+  makeQuest({
+    id: "random-train",
+    questNo: "002",
+    title: "The Random Train Challenge",
+    region: "deutschlandweit",
+    image: imgTrain,
+    cost: 0,
+    distance: "ab Bahnhof",
+    duration: "3–6 Stunden",
+    durationHours: 6,
+    difficulty: "medium",
+    transport: "Regionalzug",
+    nights: "Tagestrip",
+    description: "Einsteigen, aussteigen, drei Stunden lang neugierig sein.",
+    mission:
+      "Steige mit deinem Deutschlandticket in einen Zug und an einer zufälligen Station aus. Erkunde den Ort für drei Stunden.",
+    rules: [
+      "Ziel per Zufall bestimmen",
+      "Erst vor Ort googeln",
+      "Drei Orte entdecken",
+      "Eine Postkarte oder Notiz mitnehmen",
+    ],
+    reward: "Du warst heute irgendwo, wo du gestern noch nie hinwolltest.",
+    players: "1–4 Spieler",
+    playerMode: "group",
+    surprise: 5,
+    category: "Explore",
+    route: [
+      "11:00 — Bahnhof → Zufallszug",
+      "12:00 — Ankunft ohne Plan",
+      "12:15 — Drei Fundstücke suchen",
+      "15:30 — Rückfahrt mit Story",
+    ],
+    costs: [
+      { label: "Regionalzug", value: "0 €" },
+      { label: "Snack", value: "5 €" },
+    ],
+    gear: ["Deutschlandticket", "Powerbank", "Notizbuch", "Snack"],
+    accent: "blue",
+  }),
+  makeQuest({
+    id: "food-ten",
+    questNo: "003",
+    title: "10€ Food Challenge",
+    region: "deine Stadt",
+    image: imgFood,
+    cost: 10,
+    distance: "0–8 km",
+    duration: "2–4 Stunden",
+    durationHours: 4,
+    difficulty: "easy",
+    transport: "zu Fuß + ÖPNV",
+    nights: "Tagestrip",
+    description: "Drei Spots. Zehn Euro. Ein Siegergericht.",
+    mission:
+      "Du und deine Freunde haben jeweils maximal 10 €. Findet das interessanteste Essen in eurer Stadt.",
+    rules: [
+      "Budget vorher auf den Tisch legen",
+      "Drei Mini-Portionen statt ein Menü",
+      "Bewertet Geschmack, Story und Preis",
+      "Gewinnergericht fotografieren",
+    ],
+    reward: "Ihr habt aus Kleingeld eine neue Lieblingsgeschichte gemacht.",
+    players: "2–6 Spieler",
+    playerMode: "friends",
+    surprise: 3,
+    category: "Food",
+    route: [
+      "12:00 — Treffpunkt am Bahnhof",
+      "12:30 — Spot 01 per Münzwurf",
+      "14:00 — Spot 02 + Spot 03",
+      "16:00 — Jury & Gewinner",
+    ],
+    costs: [{ label: "Essen", value: "10 €" }],
+    gear: ["10-Euro-Schein", "Notizen-App", "Wasserflasche", "Gute Laune"],
+    accent: "orange",
+  }),
+  makeQuest({
+    id: "no-maps",
+    questNo: "004",
+    title: "No Google Maps",
+    region: "deine Stadt",
+    image: imgCity,
+    cost: 0,
+    distance: "0–10 km",
+    duration: "3–5 Stunden",
+    durationHours: 5,
+    difficulty: "medium",
+    transport: "zu Fuß + ÖPNV",
+    nights: "Tagestrip",
+    description: "Ein Stadtteil, den du nur aus dem Augenwinkel kennst.",
+    mission:
+      "Erkunde einen neuen Stadtteil oder Ort für mehrere Stunden – ohne Google Maps.",
+    rules: [
+      "Handy auf Flugmodus",
+      "An jeder Kreuzung abstimmen",
+      "Eine Person fragen, wo es langgeht",
+      "Einen Ort finden, der nicht im Feed war",
+    ],
+    reward: "Du kennst deine eigene Stadt jetzt ein kleines Stück besser.",
+    players: "1–4 Spieler",
+    playerMode: "solo",
+    surprise: 4,
+    category: "Explore",
+    route: [
+      "13:00 — Start an einer unbekannten Haltestelle",
+      "14:00 — Ohne Karte abbiegen",
+      "16:00 — Fundstück im neuen Viertel",
+      "17:30 — Rückweg nach Gefühl",
+    ],
+    costs: [{ label: "ÖPNV", value: "0–5 €" }],
+    gear: [
+      "Handy auf Flugmodus",
+      "Kamera",
+      "Bargeld",
+      "Kleine Karte aus Papier",
+    ],
+    accent: "violet",
+  }),
+  makeQuest({
+    id: "photo-hunt",
+    questNo: "005",
+    title: "Photo Hunt",
+    region: "deine Stadt",
+    image: imgCamera,
+    cost: 0,
+    distance: "0–8 km",
+    duration: "2–4 Stunden",
+    durationHours: 4,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "15 Motive. Eine Kamera. Kein endloses Scrollen.",
+    mission:
+      "Erstelle eine Liste mit 15 Dingen, die du fotografieren musst. Wer zuerst alles findet, gewinnt.",
+    rules: [
+      "Motive gemeinsam festlegen",
+      "Keine Stockfotos",
+      "Jede Person muss fünf Motive finden",
+      "Am Ende eine Sieger-Collage bauen",
+    ],
+    reward: "Deine Stadt sieht plötzlich aus wie ein Set.",
+    players: "2–6 Spieler",
+    playerMode: "friends",
+    surprise: 3,
+    category: "Creative",
+    route: [
+      "14:00 — Motive ziehen",
+      "14:15 — Hunt beginnt",
+      "16:00 — Zwischencheck am Kiosk",
+      "17:00 — Collage & Sieger",
+    ],
+    costs: [
+      { label: "Anreise", value: "0 €" },
+      { label: "Kiosk", value: "3 €" },
+    ],
+    gear: ["Handy oder Kamera", "Motive-Liste", "Powerbank", "Stift"],
+    accent: "pink",
+  }),
+  makeQuest({
+    id: "bike-nowhere",
+    questNo: "006",
+    title: "Bike to Nowhere",
+    region: "deine Umgebung",
+    image: imgBike,
+    cost: 5,
+    distance: "0–25 km",
+    duration: "3–6 Stunden",
+    durationHours: 6,
+    difficulty: "medium",
+    transport: "Fahrrad",
+    nights: "Tagestrip",
+    description: "Jede Kreuzung ist eine Entscheidung.",
+    mission:
+      "Fahrt mit dem Fahrrad los und entscheidet an jeder Kreuzung per Münzwurf, wohin ihr fahrt.",
+    rules: [
+      "Münze entscheidet links oder rechts",
+      "Nach 45 Minuten Pause machen",
+      "Nicht auf Hauptstraßen riskieren",
+      "Am Ende einen Namen für die Route finden",
+    ],
+    reward:
+      "Ihr seid nicht verloren. Ihr seid auf einer selbst erfundenen Strecke.",
+    players: "2–4 Spieler",
+    playerMode: "friends",
+    surprise: 5,
+    category: "Friends",
+    route: [
+      "11:00 — Fahrräder checken",
+      "11:30 — Erste Münze",
+      "13:00 — Picknick am Zufallsort",
+      "16:00 — Mit letzter Münze heim",
+    ],
+    costs: [{ label: "Snacks", value: "5 €" }],
+    gear: ["Fahrrad", "Helm", "Mini-Pumpe", "Münze"],
+    accent: "green",
+  }),
+  makeQuest({
+    id: "five-am",
+    questNo: "007",
+    title: "The 5 AM Challenge",
+    region: "deine Umgebung",
+    image: imgForest,
+    cost: 0,
+    distance: "0–12 km",
+    duration: "4–6 Stunden",
+    durationHours: 6,
+    difficulty: "hard",
+    transport: "zu Fuß + ÖPNV",
+    nights: "Tagestrip",
+    description:
+      "Mach etwas, das du sonst nie vor Schule oder Arbeit tun würdest.",
+    mission:
+      "Steht früh auf und macht gemeinsam etwas, das ihr normalerweise nie vor dem Tag tun würdet.",
+    rules: [
+      "Wecker nicht snoozen",
+      "Kein Handy bis nach dem Frühstück",
+      "Etwas Neues ausprobieren",
+      "Um 09:00 Uhr ehrlich bewerten",
+    ],
+    reward: "Der frühe Morgen gehört jetzt zu euch.",
+    players: "2–4 Spieler",
+    playerMode: "friends",
+    surprise: 4,
+    category: "Challenge",
+    route: [
+      "05:00 — Treffpunkt",
+      "05:30 — Mission starten",
+      "07:00 — Frühstück draußen",
+      "09:00 — Tagesstart mit Vorsprung",
+    ],
+    costs: [{ label: "Frühstück", value: "0–5 €" }],
+    gear: ["Wecker", "Warme Schicht", "Thermoskanne", "Mut"],
+    accent: "red",
+  }),
+  makeQuest({
+    id: "unknown",
+    questNo: "008",
+    title: "Unknown Destination",
+    region: "deutschlandweit",
+    image: imgLake,
+    cost: 15,
+    distance: "ab Bahnhof",
+    duration: "6–10 Stunden",
+    durationHours: 10,
+    difficulty: "medium",
+    transport: "Regionalzug",
+    nights: "Tagestrip",
+    description: "Eine Person plant. Alle anderen erfahren es unterwegs.",
+    mission:
+      "Eine Person plant das Ziel, die anderen erfahren erst unterwegs, wohin es geht.",
+    rules: [
+      "Nur eine Person kennt den Zielort",
+      "Hinweise erst an Haltestellen",
+      "Alle akzeptieren die Überraschung",
+      "Am Ende ein Gruppenfoto",
+    ],
+    reward: "Ihr habt einen Ort besucht, den niemand vorgeschlagen hätte.",
+    players: "3–6 Spieler",
+    playerMode: "group",
+    surprise: 5,
+    category: "Random",
+    route: [
+      "09:00 — Treffpunkt am Bahnhof",
+      "09:30 — Erster Hinweis",
+      "11:00 — Ziel enthüllt",
+      "18:00 — Heimfahrt mit Story",
+    ],
+    costs: [
+      { label: "Zug", value: "0 €" },
+      { label: "Essen", value: "15 €" },
+    ],
+    gear: ["Ticket", "Powerbank", "Snack", "Umschlag mit Hinweisen"],
+    accent: "blue",
+  }),
+  makeQuest({
+    id: "museum-speedrun",
+    questNo: "009",
+    title: "Museum Speedrun",
+    region: "deine Stadt",
+    image: imgCity,
+    cost: 8,
+    distance: "0–10 km",
+    duration: "2–4 Stunden",
+    durationHours: 4,
+    difficulty: "easy",
+    transport: "ÖPNV",
+    nights: "Tagestrip",
+    description: "Ein Museum, aber mit eigener Spielregel.",
+    mission:
+      "Besucht ein Museum und findet in 60 Minuten das seltsamste, schönste und unterschätzteste Objekt.",
+    rules: [
+      "Jede Person wählt ein Objekt",
+      "Keine Audioguides",
+      "Eine Story dazu erfinden",
+      "Am Ausgang abstimmen",
+    ],
+    reward: "Du hast Kultur nicht konsumiert. Du hast sie gespielt.",
+    players: "1–4 Spieler",
+    playerMode: "friends",
+    surprise: 3,
+    category: "Creative",
+    route: [
+      "14:00 — Museum wählen",
+      "14:30 — Speedrun startet",
+      "15:30 — Objektgeschichten",
+      "16:00 — Jury am Café",
+    ],
+    costs: [{ label: "Eintritt", value: "8 €" }],
+    gear: ["Handy", "Notizen", "Bargeld", "Offener Blick"],
+    accent: "violet",
+  }),
+  makeQuest({
+    id: "hill-rep",
+    questNo: "010",
+    title: "Hill Rep Roulette",
+    region: "deine Umgebung",
+    image: imgForest,
+    cost: 0,
+    distance: "0–8 km",
+    duration: "1–3 Stunden",
+    durationHours: 3,
+    difficulty: "hard",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Finde den nächsten Hügel und mach daraus ein Level.",
+    mission:
+      "Sucht euch eine Steigung und würfelt aus, wie viele Runden ihr schafft. Jede Runde bekommt einen Codenamen.",
+    rules: [
+      "Gemeinsam warm machen",
+      "Pausen sind Teil der Mission",
+      "Nicht über die eigene Grenze gehen",
+      "Cooldown und Wasser nicht vergessen",
+    ],
+    reward:
+      "Du hast deinem inneren Schweinehund einen neuen Highscore gegeben.",
+    players: "1–4 Spieler",
+    playerMode: "solo",
+    surprise: 3,
+    category: "Challenge",
+    route: [
+      "16:00 — Hügel finden",
+      "16:15 — Warm-up",
+      "16:30 — Würfel bestimmt Runden",
+      "17:30 — Highscore notieren",
+    ],
+    costs: [{ label: "Anreise", value: "0 €" }],
+    gear: ["Wasser", "Sportschuhe", "Timer", "Handtuch"],
+    accent: "red",
+  }),
+  makeQuest({
+    id: "market-only",
+    questNo: "011",
+    title: "One Market Dinner",
+    region: "deine Stadt",
+    image: imgFood,
+    cost: 12,
+    distance: "0–8 km",
+    duration: "2–4 Stunden",
+    durationHours: 4,
+    difficulty: "easy",
+    transport: "zu Fuß + ÖPNV",
+    nights: "Tagestrip",
+    description: "Kocht ein Dinner, das nur aus einem Markt besteht.",
+    mission:
+      "Jede Person kauft auf dem Wochenmarkt eine Zutat. Gemeinsam kocht ihr daraus ein Abendessen.",
+    rules: [
+      "Pro Person genau eine Zutat",
+      "Budgetlimit vorher setzen",
+      "Nichts online nachbestellen",
+      "Rezept erst nach dem Einkauf erfinden",
+    ],
+    reward: "Aus zufälligen Zutaten wurde euer bestes improvisiertes Dinner.",
+    players: "2–6 Spieler",
+    playerMode: "friends",
+    surprise: 4,
+    category: "Food",
+    route: [
+      "17:00 — Markt treffen",
+      "17:15 — Zutaten ziehen",
+      "18:00 — Küche improvisieren",
+      "19:30 — Dinner & Bewertung",
+    ],
+    costs: [{ label: "Zutaten", value: "12 €" }],
+    gear: ["Stoffbeutel", "Notizen", "Kochmöglichkeit", "Hunger"],
+    accent: "orange",
+  }),
+  makeQuest({
+    id: "postcard",
+    questNo: "012",
+    title: "Send a Real Postcard",
+    region: "deine Umgebung",
+    image: imgDawn,
+    cost: 3,
+    distance: "0–12 km",
+    duration: "1–3 Stunden",
+    durationHours: 3,
+    difficulty: "easy",
+    transport: "zu Fuß + ÖPNV",
+    nights: "Tagestrip",
+    description: "Schreib jemandem, bevor du wieder scrollst.",
+    mission:
+      "Finde einen schönen Ort, kaufe eine Postkarte und schreib einer Person, von der du lange nichts gehört hast.",
+    rules: [
+      "Text handschriftlich schreiben",
+      "Kein Copy-Paste",
+      "Karte noch heute einwerfen",
+      "Ort auf der Rückseite notieren",
+    ],
+    reward: "Du hast eine kleine Zeitkapsel in die Welt geschickt.",
+    players: "1–2 Spieler",
+    playerMode: "solo",
+    surprise: 2,
+    category: "Spontaneous",
+    route: [
+      "15:00 — Postkarte finden",
+      "15:30 — Lieblingsort suchen",
+      "16:00 — Schreiben",
+      "16:30 — Briefkasten finden",
+    ],
+    costs: [{ label: "Karte & Porto", value: "3 €" }],
+    gear: ["Stift", "Bargeld", "Jacke", "Neugier"],
+    accent: "pink",
+  }),
+  makeQuest({
+    id: "tiny-zine",
+    questNo: "013",
+    title: "Make a Tiny Zine",
+    region: "deine Stadt",
+    image: imgCamera,
+    cost: 0,
+    distance: "0–5 km",
+    duration: "1–2 Stunden",
+    durationHours: 2,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Ein Mini-Magazin über genau diesen Tag.",
+    mission:
+      "Falte ein Blatt Papier zu einem Mini-Zine und fülle jede Seite mit einer Beobachtung, Zeichnung oder absurden Schlagzeile.",
+    rules: [
+      "Nur ein Blatt Papier",
+      "Mindestens eine Zeichnung",
+      "Eine Schlagzeile über einen Fremden-Ort",
+      "Zine verschenken oder auslegen",
+    ],
+    reward: "Du hast aus einem leeren Blatt eine kleine Welt gebaut.",
+    players: "1–2 Spieler",
+    playerMode: "solo",
+    surprise: 3,
+    category: "Creative",
+    route: [
+      "14:00 — Papier und Stift finden",
+      "14:15 — Sechs Seiten füllen",
+      "15:00 — Cover gestalten",
+      "15:30 — Zine weitergeben",
+    ],
+    costs: [{ label: "Material", value: "0 €" }],
+    gear: ["Papier", "Stift", "Klebeband", "Neugier"],
+    accent: "violet",
+  }),
+  makeQuest({
+    id: "soundwalk",
+    questNo: "014",
+    title: "Soundwalk",
+    region: "deine Umgebung",
+    image: imgForest,
+    cost: 0,
+    distance: "0–8 km",
+    duration: "1–3 Stunden",
+    durationHours: 3,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Hör deine Umgebung wie einen Film.",
+    mission:
+      "Lauft eine bekannte Strecke ohne Musik und sammelt zehn Geräusche. Gebt jedem Sound einen Filmtitel.",
+    rules: [
+      "Kopfhörer bleiben zu Hause",
+      "Zehn Sounds notieren",
+      "Mindestens ein Naturgeräusch",
+      "Am Ende Soundtrack-Reihenfolge bauen",
+    ],
+    reward: "Deine vertraute Strecke hat plötzlich einen Soundtrack.",
+    players: "1–4 Spieler",
+    playerMode: "friends",
+    surprise: 4,
+    category: "Creative",
+    route: [
+      "16:00 — Startpunkt wählen",
+      "16:15 — Geräusch 01–05",
+      "17:00 — Geräusch 06–10",
+      "17:30 — Soundtrack benennen",
+    ],
+    costs: [{ label: "Anreise", value: "0 €" }],
+    gear: ["Notizen-App", "Wasser", "Bequeme Schuhe", "Stille"],
+    accent: "pink",
+  }),
+  makeQuest({
+    id: "color-hunt",
+    questNo: "015",
+    title: "Color Hunt",
+    region: "deine Stadt",
+    image: imgCity,
+    cost: 0,
+    distance: "0–6 km",
+    duration: "1–3 Stunden",
+    durationHours: 3,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Eine Farbe. Zehn Fundstücke. Neue Augen.",
+    mission:
+      "Wählt eine Farbe und findet zehn Dinge in genau diesem Ton. Am Ende baut ihr daraus eine Foto-Collage.",
+    rules: [
+      "Farbe vorher festlegen",
+      "Keine Online-Bilder",
+      "Mindestens ein Fundstück übersehen",
+      "Collage im Gruppenchat teilen",
+    ],
+    reward: "Du siehst deine Stadt jetzt in einer neuen Farbe.",
+    players: "1–4 Spieler",
+    playerMode: "friends",
+    surprise: 3,
+    category: "Creative",
+    route: [
+      "15:00 — Farbe würfeln",
+      "15:15 — Hunt starten",
+      "16:15 — Zwischenstand",
+      "17:00 — Collage bauen",
+    ],
+    costs: [{ label: "Anreise", value: "0 €" }],
+    gear: ["Handy", "Farbwürfel oder Zufallszahl", "Powerbank", "Wasser"],
+    accent: "violet",
+  }),
+  makeQuest({
+    id: "blind-menu",
+    questNo: "016",
+    title: "Blind Menu",
+    region: "deine Stadt",
+    image: imgFood,
+    cost: 8,
+    distance: "0–5 km",
+    duration: "1–3 Stunden",
+    durationHours: 3,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Bestellt etwas, dessen Namen ihr nicht kennt.",
+    mission:
+      "Geht in einen Laden oder ein Café und bestellt jeweils eine Sache, die ihr noch nie probiert habt.",
+    rules: [
+      "Budget vorher festlegen",
+      "Eine Person darf die Karte erklären",
+      "Erst probieren, dann googeln",
+      "Ehrliche 1–10-Bewertung",
+    ],
+    reward: "Ein kleiner Mutmoment schmeckt besser als Routine.",
+    players: "2–4 Spieler",
+    playerMode: "friends",
+    surprise: 4,
+    category: "Food",
+    route: [
+      "18:00 — Ort auswählen",
+      "18:15 — Blind bestellen",
+      "18:45 — Probieren",
+      "19:15 — Bewertungsrunde",
+    ],
+    costs: [{ label: "Essen oder Getränk", value: "8 €" }],
+    gear: ["8 €", "Notizen", "Offener Geschmack", "Wasser"],
+    accent: "orange",
+  }),
+  makeQuest({
+    id: "future-letter",
+    questNo: "017",
+    title: "Letter to Future You",
+    region: "deine Umgebung",
+    image: imgDawn,
+    cost: 0,
+    distance: "0–5 km",
+    duration: "1–2 Stunden",
+    durationHours: 2,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Eine Nachricht, die erst später ankommt.",
+    mission:
+      "Schreib dir selbst einen Brief mit drei Dingen, die du gerade fühlst, und verstecke ihn für einen Monat.",
+    rules: [
+      "Handschriftlich schreiben",
+      "Konkreten Ort wählen",
+      "Öffnungsdatum festlegen",
+      "Nicht vorher nachsehen",
+    ],
+    reward: "Du hast deinem zukünftigen Ich ein Fundstück hinterlassen.",
+    players: "1 Spieler",
+    playerMode: "solo",
+    surprise: 2,
+    category: "Spontaneous",
+    route: [
+      "Heute — ruhigen Ort suchen",
+      "Heute — Brief schreiben",
+      "Heute — sicher verstecken",
+      "In 30 Tagen — öffnen",
+    ],
+    costs: [{ label: "Material", value: "0 €" }],
+    gear: ["Papier", "Umschlag", "Stift", "Kalender"],
+    accent: "pink",
+  }),
+  makeQuest({
+    id: "street-museum",
+    questNo: "018",
+    title: "Street Museum",
+    region: "deine Stadt",
+    image: imgCamera,
+    cost: 0,
+    distance: "0–8 km",
+    duration: "1–3 Stunden",
+    durationHours: 3,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Kuratiert eure eigene Ausstellung.",
+    mission:
+      "Findet fünf unscheinbare Dinge auf der Straße und schreibt kleine Museumslabels dazu.",
+    rules: [
+      "Nichts berühren oder verschieben",
+      "Jedes Label braucht einen Titel",
+      "Eine Person ist Kurator:in",
+      "Ausstellung gemeinsam ablaufen",
+    ],
+    reward: "Du hast Alltagskram in Kunst verwandelt.",
+    players: "1–4 Spieler",
+    playerMode: "friends",
+    surprise: 4,
+    category: "Creative",
+    route: [
+      "15:00 — Viertel wählen",
+      "15:20 — Fundstück 01–03",
+      "16:00 — Labels schreiben",
+      "16:30 — Ausstellung eröffnen",
+    ],
+    costs: [{ label: "Anreise", value: "0 €" }],
+    gear: ["Notizbuch", "Stift", "Handy", "Respekt für den Ort"],
+    accent: "violet",
+  }),
+  makeQuest({
+    id: "coin-cinema",
+    questNo: "019",
+    title: "Coin-Flip Cinema",
+    region: "deine Stadt",
+    image: imgCity,
+    cost: 0,
+    distance: "0–5 km",
+    duration: "2–4 Stunden",
+    durationHours: 4,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Ein Filmabend mit Zufallsregeln.",
+    mission:
+      "Wählt drei Filme nach Zufall aus und entscheidet per Münzwurf, welcher heute läuft. Snacks bekommen ebenfalls eine Regel.",
+    rules: [
+      "Keine Trailer vorher",
+      "Münze entscheidet",
+      "Snack-Farbe auswürfeln",
+      "Nachher eine Drei-Satz-Rezension",
+    ],
+    reward: "Aus einem normalen Abend wurde ein kleines Festival.",
+    players: "2–6 Spieler",
+    playerMode: "group",
+    surprise: 4,
+    category: "Random",
+    route: [
+      "19:00 — Filmliste bauen",
+      "19:15 — Münzwurf",
+      "19:30 — Snacks besorgen",
+      "20:00 — Screening & Review",
+    ],
+    costs: [{ label: "Snacks", value: "0–8 €" }],
+    gear: ["Münze", "Decke", "Snacks", "Streaming oder Bibliothek"],
+    accent: "blue",
+  }),
+  makeQuest({
+    id: "kindness-bingo",
+    questNo: "020",
+    title: "Kindness Bingo",
+    region: "deine Umgebung",
+    image: imgLake,
+    cost: 0,
+    distance: "0–8 km",
+    duration: "1–3 Stunden",
+    durationHours: 3,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Kleine gute Dinge als Mission.",
+    mission:
+      "Erstellt ein Bingo mit zehn freundlichen, respektvollen Aktionen, die niemanden in eine unangenehme Situation bringen.",
+    rules: [
+      "Niemand filmen",
+      "Keine Gegenleistung erwarten",
+      "Grenzen respektieren",
+      "Am Ende gemeinsam reflektieren",
+    ],
+    reward:
+      "Du hast deinen Tag und vielleicht den einer anderen Person heller gemacht.",
+    players: "1–4 Spieler",
+    playerMode: "friends",
+    surprise: 4,
+    category: "Friends",
+    route: [
+      "15:00 — Bingo erstellen",
+      "15:15 — Zwei Stunden spielen",
+      "17:15 — Felder abhaken",
+      "17:30 — Lieblingsmoment teilen",
+    ],
+    costs: [{ label: "Anreise", value: "0 €" }],
+    gear: ["Papier", "Stift", "Wasser", "Respekt"],
+    accent: "green",
+  }),
+  makeQuest({
+    id: "one-hour-masterpiece",
+    questNo: "021",
+    title: "One-Hour Masterpiece",
+    region: "deine Umgebung",
+    image: imgCamera,
+    cost: 0,
+    distance: "0–3 km",
+    duration: "1–2 Stunden",
+    durationHours: 2,
+    difficulty: "easy",
+    transport: "zu Fuß",
+    nights: "Tagestrip",
+    description: "Ein Werk, eine Stunde, kein Anspruch.",
+    mission:
+      "Erstelle in 60 Minuten ein Bild, Gedicht, Lied oder Objekt über den Ort, an dem du gerade bist.",
+    rules: [
+      "Timer auf 60 Minuten",
+      "Kein Tutorial öffnen",
+      "Unfertig ist erlaubt",
+      "Werk am Ende benennen",
+    ],
+    reward: "Du hast etwas gemacht, statt nur etwas anzufangen.",
+    players: "1–4 Spieler",
+    playerMode: "solo",
+    surprise: 3,
+    category: "Creative",
+    route: [
+      "16:00 — Material wählen",
+      "16:05 — Timer starten",
+      "17:05 — Werk signieren",
+      "17:15 — Mini-Ausstellung",
+    ],
+    costs: [{ label: "Material", value: "0 €" }],
+    gear: ["Papier oder Restmaterial", "Stift", "Timer", "Mut zum Unperfekten"],
+    accent: "pink",
+  }),
+  makeQuest({
+    id: "three-stop-story",
+    questNo: "022",
+    title: "Three-Stop Story",
+    region: "deine Stadt",
+    image: imgTrain,
+    cost: 5,
+    distance: "0–12 km",
+    duration: "2–4 Stunden",
+    durationHours: 4,
+    difficulty: "easy",
+    transport: "ÖPNV",
+    nights: "Tagestrip",
+    description: "Drei Haltestellen, eine erfundene Geschichte.",
+    mission:
+      "Steigt an drei zufälligen Haltestellen aus und sammelt jeweils ein Detail für eine gemeinsame Kurzgeschichte.",
+    rules: [
+      "Haltestellen per Zufall wählen",
+      "Pro Stopp ein Detail notieren",
+      "Keine Recherche bis zum Schluss",
+      "Geschichte gemeinsam vorlesen",
+    ],
+    reward: "Euer Nachmittag hat jetzt eine Handlung.",
+    players: "2–4 Spieler",
+    playerMode: "friends",
+    surprise: 5,
+    category: "Explore",
+    route: [
+      "14:00 — Drei Haltestellen losen",
+      "14:30 — Detail 01",
+      "15:30 — Detail 02",
+      "16:30 — Detail 03 & Story",
+    ],
+    costs: [{ label: "ÖPNV", value: "0–5 €" }],
+    gear: ["Ticket", "Notizen", "Stift", "Fantasie"],
+    accent: "blue",
+  }),
 ];
 
-const categories: QuestCategory[] = ["Outdoor", "Explore", "Friends", "Challenge", "Creative", "Food", "Spontaneous", "Random"];
+const categories: QuestCategory[] = [
+  "Outdoor",
+  "Explore",
+  "Friends",
+  "Challenge",
+  "Creative",
+  "Food",
+  "Spontaneous",
+  "Random",
+];
 const TreesIcon: LucideIcon = Mountain;
-const categoryMeta: Record<QuestCategory, { label: string; icon: LucideIcon; color: string }> = {
-  Outdoor: { label: "Outdoor", icon: TreesIcon, color: "mint" }, Explore: { label: "Explore", icon: TrainFront, color: "blue" }, Friends: { label: "Friends", icon: Users, color: "yellow" }, Challenge: { label: "Challenge", icon: Dumbbell, color: "red" }, Creative: { label: "Creative", icon: Palette, color: "violet" }, Food: { label: "Food", icon: Pizza, color: "orange" }, Spontaneous: { label: "Spontaneous", icon: Zap, color: "pink" }, Random: { label: "Random", icon: Dice5, color: "blue" },
+const categoryMeta: Record<
+  QuestCategory,
+  { label: string; icon: LucideIcon; color: string }
+> = {
+  Outdoor: { label: "Outdoor", icon: TreesIcon, color: "mint" },
+  Explore: { label: "Explore", icon: TrainFront, color: "blue" },
+  Friends: { label: "Friends", icon: Users, color: "yellow" },
+  Challenge: { label: "Challenge", icon: Dumbbell, color: "red" },
+  Creative: { label: "Creative", icon: Palette, color: "violet" },
+  Food: { label: "Food", icon: Pizza, color: "orange" },
+  Spontaneous: { label: "Spontaneous", icon: Zap, color: "pink" },
+  Random: { label: "Random", icon: Dice5, color: "blue" },
 };
 
-type BadgeMeta = { id: string; title: string; description: string; icon: LucideIcon; color: string; target: number; progress: (completed: Trip[]) => number; unlocked: (completed: Trip[]) => boolean };
+type BadgeMeta = {
+  id: string;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  color: string;
+  target: number;
+  progress: (completed: Trip[]) => number;
+  unlocked: (completed: Trip[]) => boolean;
+};
 const badgeMeta: BadgeMeta[] = [
-  { id: "first-step", title: "First Step", description: "Deine erste Sidequest abgeschlossen.", icon: Award, color: "lime", target: 1, progress: (done) => Math.min(done.length, 1), unlocked: (done) => done.length >= 1 },
-  { id: "creative-spark", title: "Creative Spark", description: "Drei kreative Missionen gemacht.", icon: BookOpen, color: "violet", target: 3, progress: (done) => done.filter((quest) => quest.category === "Creative").length, unlocked: (done) => done.filter((quest) => quest.category === "Creative").length >= 3 },
-  { id: "zero-budget", title: "Zero Budget", description: "Drei Sidequests für 0 € abgeschlossen.", icon: Medal, color: "cyan", target: 3, progress: (done) => done.filter((quest) => quest.cost === 0).length, unlocked: (done) => done.filter((quest) => quest.cost === 0).length >= 3 },
-  { id: "good-company", title: "Good Company", description: "Drei Quests mit anderen erlebt.", icon: Gift, color: "orange", target: 3, progress: (done) => done.filter((quest) => quest.playerMode !== "solo").length, unlocked: (done) => done.filter((quest) => quest.playerMode !== "solo").length >= 3 },
-  { id: "off-the-map", title: "Off the Map", description: "Drei Explore- oder Random-Quests abgeschlossen.", icon: Compass, color: "blue", target: 3, progress: (done) => done.filter((quest) => quest.category === "Explore" || quest.category === "Random").length, unlocked: (done) => done.filter((quest) => quest.category === "Explore" || quest.category === "Random").length >= 3 },
-  { id: "sidequest-veteran", title: "Sidequest Veteran", description: "Zehn Missionen abgeschlossen.", icon: Trophy, color: "pink", target: 10, progress: (done) => done.length, unlocked: (done) => done.length >= 10 },
+  {
+    id: "first-step",
+    title: "First Step",
+    description: "Deine erste Sidequest abgeschlossen.",
+    icon: Award,
+    color: "lime",
+    target: 1,
+    progress: done => Math.min(done.length, 1),
+    unlocked: done => done.length >= 1,
+  },
+  {
+    id: "creative-spark",
+    title: "Creative Spark",
+    description: "Drei kreative Missionen gemacht.",
+    icon: BookOpen,
+    color: "violet",
+    target: 3,
+    progress: done =>
+      done.filter(quest => quest.category === "Creative").length,
+    unlocked: done =>
+      done.filter(quest => quest.category === "Creative").length >= 3,
+  },
+  {
+    id: "zero-budget",
+    title: "Zero Budget",
+    description: "Drei Sidequests für 0 € abgeschlossen.",
+    icon: Medal,
+    color: "cyan",
+    target: 3,
+    progress: done => done.filter(quest => quest.cost === 0).length,
+    unlocked: done => done.filter(quest => quest.cost === 0).length >= 3,
+  },
+  {
+    id: "good-company",
+    title: "Good Company",
+    description: "Drei Quests mit anderen erlebt.",
+    icon: Gift,
+    color: "orange",
+    target: 3,
+    progress: done => done.filter(quest => quest.playerMode !== "solo").length,
+    unlocked: done =>
+      done.filter(quest => quest.playerMode !== "solo").length >= 3,
+  },
+  {
+    id: "off-the-map",
+    title: "Off the Map",
+    description: "Drei Explore- oder Random-Quests abgeschlossen.",
+    icon: Compass,
+    color: "blue",
+    target: 3,
+    progress: done =>
+      done.filter(
+        quest => quest.category === "Explore" || quest.category === "Random"
+      ).length,
+    unlocked: done =>
+      done.filter(
+        quest => quest.category === "Explore" || quest.category === "Random"
+      ).length >= 3,
+  },
+  {
+    id: "sidequest-veteran",
+    title: "Sidequest Veteran",
+    description: "Zehn Missionen abgeschlossen.",
+    icon: Trophy,
+    color: "pink",
+    target: 10,
+    progress: done => done.length,
+    unlocked: done => done.length >= 10,
+  },
 ];
-function CategoryIcon({ category, size = 16 }: { category: QuestCategory; size?: number }) { const Icon = categoryMeta[category].icon; return <Icon size={size} />; }
-function difficultyText(value: Difficulty) { return value === "easy" ? "easy" : value === "medium" ? "medium" : "hard"; }
-function Stars({ count }: { count: number }) { return <span className="quest-stars" aria-label={`${count} von 5`}>{Array.from({ length: 5 }, (_, index) => <Star key={index} size={12} fill={index < count ? "currentColor" : "none"} />)}</span>; }
-function BadgeCard({ badge, completed }: { badge: BadgeMeta; completed: Trip[] }) { const isUnlocked = badge.unlocked(completed); const Icon = isUnlocked ? badge.icon : LockKeyhole; const progress = Math.min(badge.progress(completed), badge.target); return <article className={`badge-card badge-card-${badge.color} ${isUnlocked ? "badge-unlocked" : "badge-locked"}`}><div className="badge-icon"><Icon size={22} /></div><div className="badge-copy"><div className="badge-status">{isUnlocked ? "UNLOCKED" : `${progress}/${badge.target}`}</div><h3>{badge.title}</h3><p>{badge.description}</p><div className="badge-track"><span style={{ width: `${(progress / badge.target) * 100}%` }} /></div></div></article>; }
+function CategoryIcon({
+  category,
+  size = 16,
+}: {
+  category: QuestCategory;
+  size?: number;
+}) {
+  const Icon = categoryMeta[category].icon;
+  return <Icon size={size} />;
+}
+function difficultyText(value: Difficulty) {
+  return value === "easy" ? "easy" : value === "medium" ? "medium" : "hard";
+}
+function Stars({ count }: { count: number }) {
+  return (
+    <span className="quest-stars" aria-label={`${count} von 5`}>
+      {Array.from({ length: 5 }, (_, index) => (
+        <Star
+          key={index}
+          size={12}
+          fill={index < count ? "currentColor" : "none"}
+        />
+      ))}
+    </span>
+  );
+}
+function BadgeCard({
+  badge,
+  completed,
+}: {
+  badge: BadgeMeta;
+  completed: Trip[];
+}) {
+  const isUnlocked = badge.unlocked(completed);
+  const Icon = isUnlocked ? badge.icon : LockKeyhole;
+  const progress = Math.min(badge.progress(completed), badge.target);
+  return (
+    <article
+      className={`badge-card badge-card-${badge.color} ${isUnlocked ? "badge-unlocked" : "badge-locked"}`}
+    >
+      <div className="badge-icon">
+        <Icon size={22} />
+      </div>
+      <div className="badge-copy">
+        <div className="badge-status">
+          {isUnlocked ? "UNLOCKED" : `${progress}/${badge.target}`}
+        </div>
+        <h3>{badge.title}</h3>
+        <p>{badge.description}</p>
+        <div className="badge-track">
+          <span style={{ width: `${(progress / badge.target) * 100}%` }} />
+        </div>
+      </div>
+    </article>
+  );
+}
 
-function QuestCard({ quest, onOpen, completed, onComplete }: { quest: Trip; onOpen: (quest: Trip) => void; completed: boolean; onComplete: (quest: Trip) => void }) {
-  return <article className={`quest-card quest-card-${categoryMeta[quest.category].color} ${completed ? "quest-card-completed" : ""}`}>
-    <div className="quest-card-image"><img src={quest.image} alt="" /><div className="quest-card-overlay" /><span className="quest-number">SIDEQUEST #{quest.questNo}</span><span className="quest-category-badge"><CategoryIcon category={quest.category} size={13} /> {quest.category}</span></div>
-    <div className="quest-card-content"><div className="quest-card-topline"><span>MISSION</span><span>{completed ? "COMPLETED" : "OFFEN"}</span></div><h3>{quest.title}</h3><p className="quest-mission">{quest.mission}</p><div className="quest-fact-grid"><span><Clock3 size={14} /> {quest.duration}</span><span><CircleDollarSign size={14} /> {quest.cost === 0 ? "0 €" : `bis ${quest.cost} €`}</span><span><Users size={14} /> {quest.players}</span><span><Flame size={14} /> {difficultyText(quest.difficulty)}</span></div><div className="quest-card-reward"><span>REWARD</span><p>{quest.reward}</p></div><div className="quest-card-actions"><button className={`accept-button ${completed ? "accept-button-complete" : ""}`} onClick={() => onComplete(quest)}>{completed ? <Check size={15} /> : <Gamepad2 size={15} />} {completed ? "Completed" : "Accept Quest"}</button><button className="details-button" onClick={() => onOpen(quest)}>Details <ArrowUpRight size={15} /></button></div></div>
-  </article>;
+function QuestCard({
+  quest,
+  onOpen,
+  completed,
+  onComplete,
+}: {
+  quest: Trip;
+  onOpen: (quest: Trip) => void;
+  completed: boolean;
+  onComplete: (quest: Trip) => void;
+}) {
+  return (
+    <article
+      className={`quest-card quest-card-${categoryMeta[quest.category].color} ${completed ? "quest-card-completed" : ""}`}
+    >
+      <div className="quest-card-image">
+        <img src={quest.image} alt="" />
+        <div className="quest-card-overlay" />
+        <span className="quest-number">SIDEQUEST #{quest.questNo}</span>
+        <span className="quest-category-badge">
+          <CategoryIcon category={quest.category} size={13} /> {quest.category}
+        </span>
+      </div>
+      <div className="quest-card-content">
+        <div className="quest-card-topline">
+          <span>MISSION</span>
+          <span>{completed ? "COMPLETED" : "OFFEN"}</span>
+        </div>
+        <h3>{quest.title}</h3>
+        <p className="quest-mission">{quest.mission}</p>
+        <div className="quest-fact-grid">
+          <span>
+            <Clock3 size={14} /> {quest.duration}
+          </span>
+          <span>
+            <CircleDollarSign size={14} />{" "}
+            {quest.cost === 0 ? "0 €" : `bis ${quest.cost} €`}
+          </span>
+          <span>
+            <Users size={14} /> {quest.players}
+          </span>
+          <span>
+            <Flame size={14} /> {difficultyText(quest.difficulty)}
+          </span>
+        </div>
+        <div className="quest-card-reward">
+          <span>REWARD</span>
+          <p>{quest.reward}</p>
+        </div>
+        <div className="quest-card-actions">
+          <button
+            className={`accept-button ${completed ? "accept-button-complete" : ""}`}
+            onClick={() => onComplete(quest)}
+          >
+            {completed ? <Check size={15} /> : <Gamepad2 size={15} />}{" "}
+            {completed ? "Completed" : "Accept Quest"}
+          </button>
+          <button className="details-button" onClick={() => onOpen(quest)}>
+            Details <ArrowUpRight size={15} />
+          </button>
+        </div>
+      </div>
+    </article>
+  );
 }
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [finderStep, setFinderStep] = useState(0);
-  const [finderAnswers, setFinderAnswers] = useState({ time: "", budget: "", with: "", mood: "" });
+  const [finderAnswers, setFinderAnswers] = useState({
+    time: "",
+    budget: "",
+    with: "",
+    mood: "",
+  });
   const [generatedQuest, setGeneratedQuest] = useState<Trip | null>(null);
   const [selectedQuest, setSelectedQuest] = useState<Trip | null>(null);
-  const [activeCategory, setActiveCategory] = useState<QuestCategory | "Alle">("Alle");
+  const [activeCategory, setActiveCategory] = useState<QuestCategory | "Alle">(
+    "Alle"
+  );
   const [completedIds, setCompletedIds] = useState<string[]>([]);
 
-  useEffect(() => { try { setCompletedIds(JSON.parse(localStorage.getItem("sidequest-completed") ?? "[]") as string[]); } catch { setCompletedIds([]); } }, []);
-  useEffect(() => { localStorage.setItem("sidequest-completed", JSON.stringify(completedIds)); }, [completedIds]);
+  useEffect(() => {
+    try {
+      setCompletedIds(
+        JSON.parse(
+          localStorage.getItem("sidequest-completed") ?? "[]"
+        ) as string[]
+      );
+    } catch {
+      setCompletedIds([]);
+    }
+  }, []);
+  useEffect(() => {
+    localStorage.setItem("sidequest-completed", JSON.stringify(completedIds));
+  }, [completedIds]);
 
-  const filteredQuests = useMemo(() => activeCategory === "Alle" ? trips : trips.filter((quest) => quest.category === activeCategory), [activeCategory]);
+  const filteredQuests = useMemo(
+    () =>
+      activeCategory === "Alle"
+        ? trips
+        : trips.filter(quest => quest.category === activeCategory),
+    [activeCategory]
+  );
   const featuredQuests = trips.slice(0, 9);
-  const completedQuests = trips.filter((quest) => completedIds.includes(quest.id));
-  const logCounts = categories.map((category) => ({ category, count: completedQuests.filter((quest) => quest.category === category).length }));
-  const badges = badgeMeta.map((badge) => ({ badge, unlocked: badge.unlocked(completedQuests) }));
+  const completedQuests = trips.filter(quest =>
+    completedIds.includes(quest.id)
+  );
+  const logCounts = categories.map(category => ({
+    category,
+    count: completedQuests.filter(quest => quest.category === category).length,
+  }));
+  const badges = badgeMeta.map(badge => ({
+    badge,
+    unlocked: badge.unlocked(completedQuests),
+  }));
   const unlockedBadgeCount = badges.filter(({ unlocked }) => unlocked).length;
 
-  function scrollTo(id: string) { document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }); setMobileMenuOpen(false); }
-  function answer(key: keyof typeof finderAnswers, value: string) { setFinderAnswers((current) => ({ ...current, [key]: value })); setFinderStep((step) => step + 1); }
-  function generateQuest(answerOverrides: Partial<typeof finderAnswers> = {}) { const answers = { ...finderAnswers, ...answerOverrides }; const pool = trips.filter((quest) => { const timeOk = !answers.time || answers.time === "weekend" || (answers.time === "short" && quest.durationHours <= 2) || (answers.time === "half" && quest.durationHours <= 5) || (answers.time === "day" && quest.durationHours <= 10); const budgetOk = !answers.budget || answers.budget === "egal" || (answers.budget === "free" && quest.cost === 0) || (answers.budget === "ten" && quest.cost <= 10) || (answers.budget === "twentyfive" && quest.cost <= 25); const playerOk = !answers.with || (answers.with === "solo" && quest.playerMode === "solo") || (answers.with === "friends" && quest.playerMode === "friends") || (answers.with === "group" && quest.playerMode === "group") || (answers.with === "duo" && quest.players.includes("2")); const moodOk = !answers.mood || answers.mood === "random" || quest.category === answers.mood; return timeOk && budgetOk && playerOk && moodOk; }); const result = (pool.length ? pool : trips)[Math.floor(Math.random() * (pool.length ? pool.length : trips.length))]; setGeneratedQuest(result); setFinderStep(5); setTimeout(() => document.getElementById("generated-quest")?.scrollIntoView({ behavior: "smooth", block: "center" }), 80); }
-  function toggleCompleted(quest: Trip) { setCompletedIds((current) => current.includes(quest.id) ? current.filter((id) => id !== quest.id) : [...current, quest.id]); }
-  function resetFinder() { setFinderStep(0); setFinderAnswers({ time: "", budget: "", with: "", mood: "" }); setGeneratedQuest(null); }
+  function scrollTo(id: string) {
+    document
+      .getElementById(id)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setMobileMenuOpen(false);
+  }
+  function answer(key: keyof typeof finderAnswers, value: string) {
+    setFinderAnswers(current => ({ ...current, [key]: value }));
+    setFinderStep(step => step + 1);
+  }
+  function generateQuest(answerOverrides: Partial<typeof finderAnswers> = {}) {
+    const answers = { ...finderAnswers, ...answerOverrides };
+    const pool = trips.filter(quest => {
+      const timeOk =
+        !answers.time ||
+        answers.time === "weekend" ||
+        (answers.time === "short" && quest.durationHours <= 2) ||
+        (answers.time === "half" && quest.durationHours <= 5) ||
+        (answers.time === "day" && quest.durationHours <= 10);
+      const budgetOk =
+        !answers.budget ||
+        answers.budget === "egal" ||
+        (answers.budget === "free" && quest.cost === 0) ||
+        (answers.budget === "ten" && quest.cost <= 10) ||
+        (answers.budget === "twentyfive" && quest.cost <= 25);
+      const playerOk =
+        !answers.with ||
+        (answers.with === "solo" && quest.playerMode === "solo") ||
+        (answers.with === "friends" && quest.playerMode === "friends") ||
+        (answers.with === "group" && quest.playerMode === "group") ||
+        (answers.with === "duo" && quest.players.includes("2"));
+      const moodOk =
+        !answers.mood ||
+        answers.mood === "random" ||
+        quest.category === answers.mood;
+      return timeOk && budgetOk && playerOk && moodOk;
+    });
+    const result = (pool.length ? pool : trips)[
+      Math.floor(Math.random() * (pool.length ? pool.length : trips.length))
+    ];
+    setGeneratedQuest(result);
+    setFinderStep(5);
+    setTimeout(
+      () =>
+        document
+          .getElementById("generated-quest")
+          ?.scrollIntoView({ behavior: "smooth", block: "center" }),
+      80
+    );
+  }
+  function toggleCompleted(quest: Trip) {
+    setCompletedIds(current =>
+      current.includes(quest.id)
+        ? current.filter(id => id !== quest.id)
+        : [...current, quest.id]
+    );
+  }
+  function resetFinder() {
+    setFinderStep(0);
+    setFinderAnswers({ time: "", budget: "", with: "", mood: "" });
+    setGeneratedQuest(null);
+  }
 
-  return <main className="sidequest-app">
-    <header className="sq-header"><a className="sq-logo" href="#top"><span className="sq-logo-mark">↗</span><span>Plan-a-Sidequest<span className="sq-logo-dot">↗</span></span></a><nav className={`sq-nav ${mobileMenuOpen ? "sq-nav-open" : ""}`}><a href="#finder" onClick={() => setMobileMenuOpen(false)}>Quest Finder</a><a href="#quests" onClick={() => setMobileMenuOpen(false)}>Discover</a><a href="#quest-log" onClick={() => setMobileMenuOpen(false)}>Quest Log</a></nav><div className="sq-header-actions"><span className="live-pill"><span /> REAL-LIFE MODE</span><button className="sq-menu-button" aria-label="Menü öffnen" onClick={() => setMobileMenuOpen((value) => !value)}>{mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}</button></div></header>
+  return (
+    <main className="sidequest-app">
+      <header className="sq-header">
+        <a className="sq-logo" href="#top">
+          <span className="sq-logo-mark">↗</span>
+          <span>
+            Plan-a-Sidequest<span className="sq-logo-dot">↗</span>
+          </span>
+        </a>
+        <nav className={`sq-nav ${mobileMenuOpen ? "sq-nav-open" : ""}`}>
+          <a href="#finder" onClick={() => setMobileMenuOpen(false)}>
+            Quest Finder
+          </a>
+          <a href="#quests" onClick={() => setMobileMenuOpen(false)}>
+            Discover
+          </a>
+          <a href="#quest-log" onClick={() => setMobileMenuOpen(false)}>
+            Quest Log
+          </a>
+        </nav>
+        <div className="sq-header-actions">
+          <span className="live-pill">
+            <span /> REAL-LIFE MODE
+          </span>
+          <button
+            className="sq-menu-button"
+            aria-label="Menü öffnen"
+            onClick={() => setMobileMenuOpen(value => !value)}
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
+      </header>
 
-    <section className="sq-hero" id="top"><div className="hero-grid-glow" /><div className="hero-copy"><div className="sq-eyebrow"><span className="sq-eyebrow-line" /> REAL-LIFE QUEST GENERATOR</div><h1>Keine Pläne?<br /><em>Starte eine Sidequest.</em></h1><p>Spontane Missionen, kleine Abenteuer und ungewöhnliche Erlebnisse für deine freie Zeit. Kein endloses Suchen. Eine Idee, die du heute wirklich machen kannst.</p><div className="hero-actions"><button className="primary-sq-button" onClick={() => scrollTo("finder")}><Dice5 size={18} /> Find my Sidequest <ArrowRight size={17} /></button><button className="secondary-sq-button" onClick={() => scrollTo("quests")}>Quests entdecken <ArrowUpRight size={16} /></button></div><div className="hero-proof"><span><Sparkles size={14} /> {trips.length} playable missions</span><span><CircleDollarSign size={14} /> ab 0 €</span><span><Zap size={14} /> heute startklar</span></div></div><div className="hero-visual"><div className="hero-scanline" /><div className="hero-visual-card"><img src={imgDawn} alt="Sonnenaufgang als Sidequest" /><div className="hero-visual-overlay" /><div className="hero-quest-stamp"><span>SIDEQUEST</span><strong>#001</strong></div><div className="hero-visual-copy"><span>MISSION OF THE DAY</span><strong>Catch the Sunrise</strong><small>0 € · 3–5 H · EASY</small></div></div><div className="hero-orbit hero-orbit-one" /><div className="hero-orbit hero-orbit-two" /><span className="hero-coordinate">52°31'N / 13°24'E</span></div><div className="hero-bottom-line"><span>01 / START HERE</span><span>LESS SCROLLING · MORE LIVING</span><span>BUILD 2026.08</span></div></section>
+      <section className="sq-hero" id="top">
+        <div className="hero-grid-glow" />
+        <div className="hero-copy">
+          <div className="sq-eyebrow">
+            <span className="sq-eyebrow-line" /> REAL-LIFE QUEST GENERATOR
+          </div>
+          <h1>
+            Keine Pläne?
+            <br />
+            <em>Starte eine Sidequest.</em>
+          </h1>
+          <p>
+            Spontane Missionen, kleine Abenteuer und ungewöhnliche Erlebnisse
+            für deine freie Zeit. Kein endloses Suchen. Eine Idee, die du heute
+            wirklich machen kannst.
+          </p>
+          <div className="hero-actions">
+            <button
+              className="primary-sq-button"
+              onClick={() => scrollTo("finder")}
+            >
+              <Dice5 size={18} /> Find my Sidequest <ArrowRight size={17} />
+            </button>
+            <button
+              className="secondary-sq-button"
+              onClick={() => scrollTo("quests")}
+            >
+              Quests entdecken <ArrowUpRight size={16} />
+            </button>
+          </div>
+          <div className="hero-proof">
+            <span>
+              <Sparkles size={14} /> {trips.length} playable missions
+            </span>
+            <span>
+              <CircleDollarSign size={14} /> ab 0 €
+            </span>
+            <span>
+              <Zap size={14} /> heute startklar
+            </span>
+          </div>
+        </div>
+        <div className="hero-visual">
+          <div className="hero-scanline" />
+          <div className="hero-visual-card">
+            <img src={imgDawn} alt="Sonnenaufgang als Sidequest" />
+            <div className="hero-visual-overlay" />
+            <div className="hero-quest-stamp">
+              <span>SIDEQUEST</span>
+              <strong>#001</strong>
+            </div>
+            <div className="hero-visual-copy">
+              <span>MISSION OF THE DAY</span>
+              <strong>Catch the Sunrise</strong>
+              <small>0 € · 3–5 H · EASY</small>
+            </div>
+          </div>
+          <div className="hero-orbit hero-orbit-one" />
+          <div className="hero-orbit hero-orbit-two" />
+          <span className="hero-coordinate">52°31'N / 13°24'E</span>
+        </div>
+        <div className="hero-bottom-line">
+          <span>01 / START HERE</span>
+          <span>LESS SCROLLING · MORE LIVING</span>
+          <span>BUILD 2026.08</span>
+        </div>
+      </section>
 
-    <section className="sq-statement"><div className="statement-index">[ 00 ]</div><div><p className="sq-eyebrow">THE PROBLEM WITH FREE TIME</p><h2>Du hast heute nichts vor.<br /><em>Das Problem lösen wir.</em></h2></div><p>Sidequest macht aus einem leeren Kalender eine konkrete Mission. Vier kurze Fragen, eine Idee – und ein Grund, die Tür aufzumachen.</p></section>
+      <section className="sq-statement">
+        <div className="statement-index">[ 00 ]</div>
+        <div>
+          <p className="sq-eyebrow">THE PROBLEM WITH FREE TIME</p>
+          <h2>
+            Du hast heute nichts vor.
+            <br />
+            <em>Das Problem lösen wir.</em>
+          </h2>
+        </div>
+        <p>
+          Sidequest macht aus einem leeren Kalender eine konkrete Mission. Vier
+          kurze Fragen, eine Idee – und ein Grund, die Tür aufzumachen.
+        </p>
+      </section>
 
-    <section className="finder-section" id="finder"><div className="section-topline"><div><p className="sq-eyebrow"><span className="sq-eyebrow-line" /> FIND YOUR SIDEQUEST</p><h2>Worauf hast du<br /><em>heute Lust?</em></h2></div><div className="finder-progress"><span>QUEST FINDER</span><strong>{finderStep < 5 ? `0${finderStep + 1}` : "READY"}</strong><div><i style={{ width: `${finderStep === 0 ? 0 : finderStep === 5 ? 100 : finderStep * 25}%` }} /></div></div></div><div className="finder-shell">{finderStep === 0 && <div className="finder-intro"><span className="finder-mission-symbol"><Compass size={28} /></span><h3>Deine nächste Mission<br /><em>ist vier Fragen entfernt.</em></h3><p>Zeit. Budget. Menschen. Stimmung. Keine Anmeldung, keine komplizierte Planung.</p><button className="finder-next-button" onClick={() => setFinderStep(1)}>Start Finder <ChevronRight size={18} /></button></div>}{finderStep === 1 && <FinderQuestion title="Wie viel Zeit hast du?" options={[["short", "Unter 2 Stunden", "quick hit"], ["half", "Halber Tag", "enough time"], ["day", "Ganzer Tag", "go explore"], ["weekend", "Wochenende", "full send"]]} onAnswer={(value) => answer("time", value)} />}{finderStep === 2 && <FinderQuestion title="Wie viel möchtest du ausgeben?" options={[["free", "0 €", "no budget needed"], ["ten", "Unter 10 €", "snack money"], ["twentyfive", "Unter 25 €", "still cheap"], ["egal", "Egal", "surprise me"]]} onAnswer={(value) => answer("budget", value)} />}{finderStep === 3 && <FinderQuestion title="Mit wem?" options={[["solo", "Alleine", "main character"], ["friends", "Mit Freunden", "squad goals"], ["duo", "Zu zweit", "two player"], ["group", "Gruppe", "the more the weird"]]} onAnswer={(value) => answer("with", value)} />}{finderStep === 4 && <FinderQuestion title="Worauf hast du Lust?" options={[["Outdoor", "Outdoor", "fresh air"], ["Explore", "Entdecken", "new places"], ["Challenge", "Challenge", "level up"], ["Creative", "Kreativität", "make something"], ["Food", "Food", "eat the city"], ["random", "Überraschung", "roll the dice"]]} onAnswer={(value) => { setFinderAnswers((current) => ({ ...current, mood: value })); generateQuest({ mood: value }); }} />}{finderStep === 5 && <div className="finder-ready"><div><span className="sq-eyebrow"><span className="sq-eyebrow-line" /> MATCH FOUND</span><h3>Deine Sidequest<br /><em>wartet schon.</em></h3><p>Kein Match fühlt sich gleich an. Diese Mission passt zu deinen Eckdaten.</p></div><button className="reset-finder" onClick={resetFinder}><RotateCcw size={15} /> Neu würfeln</button></div>}</div></section>
+      <section className="finder-section" id="finder">
+        <div className="section-topline">
+          <div>
+            <p className="sq-eyebrow">
+              <span className="sq-eyebrow-line" /> FIND YOUR SIDEQUEST
+            </p>
+            <h2>
+              Worauf hast du
+              <br />
+              <em>heute Lust?</em>
+            </h2>
+          </div>
+          <div className="finder-progress">
+            <span>QUEST FINDER</span>
+            <strong>{finderStep < 5 ? `0${finderStep + 1}` : "READY"}</strong>
+            <div>
+              <i
+                style={{
+                  width: `${finderStep === 0 ? 0 : finderStep === 5 ? 100 : finderStep * 25}%`,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="finder-shell">
+          {finderStep === 0 && (
+            <div className="finder-intro">
+              <span className="finder-mission-symbol">
+                <Compass size={28} />
+              </span>
+              <h3>
+                Deine nächste Mission
+                <br />
+                <em>ist vier Fragen entfernt.</em>
+              </h3>
+              <p>
+                Zeit. Budget. Menschen. Stimmung. Keine Anmeldung, keine
+                komplizierte Planung.
+              </p>
+              <button
+                className="finder-next-button"
+                onClick={() => setFinderStep(1)}
+              >
+                Start Finder <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
+          {finderStep === 1 && (
+            <FinderQuestion
+              title="Wie viel Zeit hast du?"
+              options={[
+                ["short", "Unter 2 Stunden", "quick hit"],
+                ["half", "Halber Tag", "enough time"],
+                ["day", "Ganzer Tag", "go explore"],
+                ["weekend", "Wochenende", "full send"],
+              ]}
+              onAnswer={value => answer("time", value)}
+            />
+          )}
+          {finderStep === 2 && (
+            <FinderQuestion
+              title="Wie viel möchtest du ausgeben?"
+              options={[
+                ["free", "0 €", "no budget needed"],
+                ["ten", "Unter 10 €", "snack money"],
+                ["twentyfive", "Unter 25 €", "still cheap"],
+                ["egal", "Egal", "surprise me"],
+              ]}
+              onAnswer={value => answer("budget", value)}
+            />
+          )}
+          {finderStep === 3 && (
+            <FinderQuestion
+              title="Mit wem?"
+              options={[
+                ["solo", "Alleine", "main character"],
+                ["friends", "Mit Freunden", "squad goals"],
+                ["duo", "Zu zweit", "two player"],
+                ["group", "Gruppe", "the more the weird"],
+              ]}
+              onAnswer={value => answer("with", value)}
+            />
+          )}
+          {finderStep === 4 && (
+            <FinderQuestion
+              title="Worauf hast du Lust?"
+              options={[
+                ["Outdoor", "Outdoor", "fresh air"],
+                ["Explore", "Entdecken", "new places"],
+                ["Challenge", "Challenge", "level up"],
+                ["Creative", "Kreativität", "make something"],
+                ["Food", "Food", "eat the city"],
+                ["random", "Überraschung", "roll the dice"],
+              ]}
+              onAnswer={value => {
+                setFinderAnswers(current => ({ ...current, mood: value }));
+                generateQuest({ mood: value });
+              }}
+            />
+          )}
+          {finderStep === 5 && (
+            <div className="finder-ready">
+              <div>
+                <span className="sq-eyebrow">
+                  <span className="sq-eyebrow-line" /> MATCH FOUND
+                </span>
+                <h3>
+                  Deine Sidequest
+                  <br />
+                  <em>wartet schon.</em>
+                </h3>
+                <p>
+                  Kein Match fühlt sich gleich an. Diese Mission passt zu deinen
+                  Eckdaten.
+                </p>
+              </div>
+              <button className="reset-finder" onClick={resetFinder}>
+                <RotateCcw size={15} /> Neu würfeln
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
 
-    {generatedQuest && <section className="generated-section" id="generated-quest"><div className="generated-label"><span className="sq-eyebrow">YOUR GENERATED QUEST</span><span className="generated-line" /></div><div className="generated-card"><div className="generated-image"><img src={generatedQuest.image} alt="" /><span>SIDEQUEST #{generatedQuest.questNo}</span></div><div className="generated-content"><div className="quest-card-topline"><span><CategoryIcon category={generatedQuest.category} size={14} /> {generatedQuest.category}</span><span>BEREIT FÜR DICH</span></div><h2>{generatedQuest.title}</h2><p className="generated-mission">{generatedQuest.mission}</p><div className="generated-meta"><span><Clock3 size={15} /> {generatedQuest.duration}</span><span><CircleDollarSign size={15} /> {generatedQuest.cost} €</span><span><Users size={15} /> {generatedQuest.players}</span><span><Flame size={15} /> {generatedQuest.surprise}/5 surprise</span></div><div className="generated-reward"><span>REWARD</span><p>{generatedQuest.reward}</p></div><div className="hero-actions"><button className="primary-sq-button" onClick={() => toggleCompleted(generatedQuest)}>{completedIds.includes(generatedQuest.id) ? <Check size={17} /> : <Gamepad2 size={17} />} {completedIds.includes(generatedQuest.id) ? "Completed" : "Accept Quest"}</button><button className="secondary-sq-button" onClick={() => setSelectedQuest(generatedQuest)}>Open mission <ArrowUpRight size={16} /></button></div></div></div></section>}
+      {generatedQuest && (
+        <section className="generated-section" id="generated-quest">
+          <div className="generated-label">
+            <span className="sq-eyebrow">YOUR GENERATED QUEST</span>
+            <span className="generated-line" />
+          </div>
+          <div className="generated-card">
+            <div className="generated-image">
+              <img src={generatedQuest.image} alt="" />
+              <span>SIDEQUEST #{generatedQuest.questNo}</span>
+            </div>
+            <div className="generated-content">
+              <div className="quest-card-topline">
+                <span>
+                  <CategoryIcon category={generatedQuest.category} size={14} />{" "}
+                  {generatedQuest.category}
+                </span>
+                <span>BEREIT FÜR DICH</span>
+              </div>
+              <h2>{generatedQuest.title}</h2>
+              <p className="generated-mission">{generatedQuest.mission}</p>
+              <div className="generated-meta">
+                <span>
+                  <Clock3 size={15} /> {generatedQuest.duration}
+                </span>
+                <span>
+                  <CircleDollarSign size={15} /> {generatedQuest.cost} €
+                </span>
+                <span>
+                  <Users size={15} /> {generatedQuest.players}
+                </span>
+                <span>
+                  <Flame size={15} /> {generatedQuest.surprise}/5 surprise
+                </span>
+              </div>
+              <div className="generated-reward">
+                <span>REWARD</span>
+                <p>{generatedQuest.reward}</p>
+              </div>
+              <div className="hero-actions">
+                <button
+                  className="primary-sq-button"
+                  onClick={() => toggleCompleted(generatedQuest)}
+                >
+                  {completedIds.includes(generatedQuest.id) ? (
+                    <Check size={17} />
+                  ) : (
+                    <Gamepad2 size={17} />
+                  )}{" "}
+                  {completedIds.includes(generatedQuest.id)
+                    ? "Completed"
+                    : "Accept Quest"}
+                </button>
+                <button
+                  className="secondary-sq-button"
+                  onClick={() => setSelectedQuest(generatedQuest)}
+                >
+                  Open mission <ArrowUpRight size={16} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
-    <section className="quests-section" id="quests"><div className="section-topline quest-section-heading"><div><p className="sq-eyebrow"><span className="sq-eyebrow-line" /> FEATURED SIDEQUESTS</p><h2>Keine Liste.<br /><em>Deine nächste Mission.</em></h2></div><p>Outdoor, Explore, Food, Creative und ein bisschen Unfug. Such dir eine aus – oder lass den Finder würfeln.</p></div><div className="category-tabs" role="tablist"><button className={activeCategory === "Alle" ? "category-tab-active" : ""} onClick={() => setActiveCategory("Alle")}>Alle <span>{trips.length}</span></button>{categories.map((category) => <button key={category} className={activeCategory === category ? "category-tab-active" : ""} onClick={() => setActiveCategory(category)}><CategoryIcon category={category} size={14} /> {category} <span>{trips.filter((quest) => quest.category === category).length}</span></button>)}</div><div className="quest-grid">{(activeCategory === "Alle" ? featuredQuests : filteredQuests).map((quest) => <QuestCard key={quest.id} quest={quest} onOpen={setSelectedQuest} completed={completedIds.includes(quest.id)} onComplete={toggleCompleted} />)}</div>{activeCategory === "Alle" && <button className="show-all-button" onClick={() => setActiveCategory("Outdoor")}>Alle Kategorien erkunden <ArrowRight size={16} /></button>}</section>
+      <section className="quests-section" id="quests">
+        <div className="section-topline quest-section-heading">
+          <div>
+            <p className="sq-eyebrow">
+              <span className="sq-eyebrow-line" /> FEATURED SIDEQUESTS
+            </p>
+            <h2>
+              Keine Liste.
+              <br />
+              <em>Deine nächste Mission.</em>
+            </h2>
+          </div>
+          <p>
+            Outdoor, Explore, Food, Creative und ein bisschen Unfug. Such dir
+            eine aus – oder lass den Finder würfeln.
+          </p>
+        </div>
+        <div className="category-tabs" role="tablist">
+          <button
+            className={activeCategory === "Alle" ? "category-tab-active" : ""}
+            onClick={() => setActiveCategory("Alle")}
+          >
+            Alle <span>{trips.length}</span>
+          </button>
+          {categories.map(category => (
+            <button
+              key={category}
+              className={
+                activeCategory === category ? "category-tab-active" : ""
+              }
+              onClick={() => setActiveCategory(category)}
+            >
+              <CategoryIcon category={category} size={14} /> {category}{" "}
+              <span>
+                {trips.filter(quest => quest.category === category).length}
+              </span>
+            </button>
+          ))}
+        </div>
+        <div className="quest-grid">
+          {(activeCategory === "Alle" ? featuredQuests : filteredQuests).map(
+            quest => (
+              <QuestCard
+                key={quest.id}
+                quest={quest}
+                onOpen={setSelectedQuest}
+                completed={completedIds.includes(quest.id)}
+                onComplete={toggleCompleted}
+              />
+            )
+          )}
+        </div>
+        {activeCategory === "Alle" && (
+          <button
+            className="show-all-button"
+            onClick={() => setActiveCategory("Outdoor")}
+          >
+            Alle Kategorien erkunden <ArrowRight size={16} />
+          </button>
+        )}
+      </section>
 
-    <section className="how-section" id="how"><div className="how-content"><p className="sq-eyebrow"><span className="sq-eyebrow-line" /> HOW IT WORKS</p><h2>Vier Fragen.<br /><em>Ein echter Plan.</em></h2><p className="how-lede">Wir glauben, dass die besten Erinnerungen oft entstehen, wenn man einfach losgeht. Sidequest nimmt dir die Recherche ab – nicht das Erlebnis.</p><div className="how-steps"><div><span>01</span><strong>Wähle deine Zeit</strong><p>Quick hit oder ganzer Tag?</p></div><div><span>02</span><strong>Setz dein Budget</strong><p>0 € ist eine valide Antwort.</p></div><div><span>03</span><strong>Choose your mood</strong><p>Wald, Food oder wild?</p></div><div><span>04</span><strong>Accept Quest</strong><p>Tür auf. Mission starten.</p></div></div></div><div className="how-side-card"><Map size={22} /><span>NO MAP REQUIRED</span><strong>Die beste Route<br /><em>ist manchmal keine.</em></strong><div className="route-doodle"><span /><span /><span /><span /><span /></div></div></section>
+      <section className="how-section" id="how">
+        <div className="how-content">
+          <p className="sq-eyebrow">
+            <span className="sq-eyebrow-line" /> HOW IT WORKS
+          </p>
+          <h2>
+            Vier Fragen.
+            <br />
+            <em>Ein echter Plan.</em>
+          </h2>
+          <p className="how-lede">
+            Wir glauben, dass die besten Erinnerungen oft entstehen, wenn man
+            einfach losgeht. Sidequest nimmt dir die Recherche ab – nicht das
+            Erlebnis.
+          </p>
+          <div className="how-steps">
+            <div>
+              <span>01</span>
+              <strong>Wähle deine Zeit</strong>
+              <p>Quick hit oder ganzer Tag?</p>
+            </div>
+            <div>
+              <span>02</span>
+              <strong>Setz dein Budget</strong>
+              <p>0 € ist eine valide Antwort.</p>
+            </div>
+            <div>
+              <span>03</span>
+              <strong>Choose your mood</strong>
+              <p>Wald, Food oder wild?</p>
+            </div>
+            <div>
+              <span>04</span>
+              <strong>Accept Quest</strong>
+              <p>Tür auf. Mission starten.</p>
+            </div>
+          </div>
+        </div>
+        <div className="how-side-card">
+          <Map size={22} />
+          <span>NO MAP REQUIRED</span>
+          <strong>
+            Die beste Route
+            <br />
+            <em>ist manchmal keine.</em>
+          </strong>
+          <div className="route-doodle">
+            <span />
+            <span />
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
+      </section>
 
-    <section className="categories-section"><div><p className="sq-eyebrow"><span className="sq-eyebrow-line" /> EXPLORE CATEGORIES</p><h2>Was darf’s<br /><em>heute sein?</em></h2></div><div className="category-orbit">{categories.map((category, index) => <button key={category} className={`orbit-category orbit-${index + 1} orbit-${categoryMeta[category].color}`} onClick={() => { setActiveCategory(category); scrollTo("quests"); }}><CategoryIcon category={category} size={18} /><span>{category}</span></button>)}</div></section>
+      <section className="categories-section">
+        <div>
+          <p className="sq-eyebrow">
+            <span className="sq-eyebrow-line" /> EXPLORE CATEGORIES
+          </p>
+          <h2>
+            Was darf’s
+            <br />
+            <em>heute sein?</em>
+          </h2>
+        </div>
+        <div className="category-orbit">
+          {categories.map((category, index) => (
+            <button
+              key={category}
+              className={`orbit-category orbit-${index + 1} orbit-${categoryMeta[category].color}`}
+              onClick={() => {
+                setActiveCategory(category);
+                scrollTo("quests");
+              }}
+            >
+              <CategoryIcon category={category} size={18} />
+              <span>{category}</span>
+            </button>
+          ))}
+        </div>
+      </section>
 
-    <section className="quest-log-section" id="quest-log"><div className="log-heading"><p className="sq-eyebrow"><span className="sq-eyebrow-line" /> YOUR QUEST LOG</p><h2>Du warst<br /><em>draußen.</em></h2><p>Deine Erfolge bleiben auf diesem Gerät. Keine Anmeldung. Kein Druck.</p></div><div className="log-stats"><div className="log-main-stat"><span>COMPLETED QUESTS</span><strong>{String(completedIds.length).padStart(2, "0")}</strong><div className="log-xp"><span style={{ width: `${Math.min(100, completedIds.length / trips.length * 100)}%` }} /></div><small>{completedIds.length === 0 ? "Dein erstes Abenteuer wartet." : `${completedIds.length} Mission${completedIds.length === 1 ? "" : "en"} abgeschlossen.`}</small></div><div className="log-category-grid">{logCounts.slice(0, 6).map(({ category, count }) => <div key={category}><CategoryIcon category={category} size={15} /><span>{category}</span><strong>{count}</strong></div>)}</div></div><div className="badges-panel"><div className="badges-heading"><div><p className="sq-eyebrow"><span className="sq-eyebrow-line" /> BADGE CABINET</p><h3>Deine kleinen<br /><em>Meilensteine.</em></h3></div><span className="badges-count"><strong>{unlockedBadgeCount}</strong>/{badgeMeta.length}<small>freigeschaltet</small></span></div><div className="badge-grid">{badges.map(({ badge }) => <BadgeCard key={badge.id} badge={badge} completed={completedQuests} />)}</div></div></section>
+      <section className="quest-log-section" id="quest-log">
+        <div className="log-heading">
+          <p className="sq-eyebrow">
+            <span className="sq-eyebrow-line" /> YOUR QUEST LOG
+          </p>
+          <h2>
+            Du warst
+            <br />
+            <em>draußen.</em>
+          </h2>
+          <p>
+            Deine Erfolge bleiben auf diesem Gerät. Keine Anmeldung. Kein Druck.
+          </p>
+        </div>
+        <div className="log-stats">
+          <div className="log-main-stat">
+            <span>COMPLETED QUESTS</span>
+            <strong>{String(completedIds.length).padStart(2, "0")}</strong>
+            <div className="log-xp">
+              <span
+                style={{
+                  width: `${Math.min(100, (completedIds.length / trips.length) * 100)}%`,
+                }}
+              />
+            </div>
+            <small>
+              {completedIds.length === 0
+                ? "Dein erstes Abenteuer wartet."
+                : `${completedIds.length} Mission${completedIds.length === 1 ? "" : "en"} abgeschlossen.`}
+            </small>
+          </div>
+          <div className="log-category-grid">
+            {logCounts.slice(0, 6).map(({ category, count }) => (
+              <div key={category}>
+                <CategoryIcon category={category} size={15} />
+                <span>{category}</span>
+                <strong>{count}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="badges-panel">
+          <div className="badges-heading">
+            <div>
+              <p className="sq-eyebrow">
+                <span className="sq-eyebrow-line" /> BADGE CABINET
+              </p>
+              <h3>
+                Deine kleinen
+                <br />
+                <em>Meilensteine.</em>
+              </h3>
+            </div>
+            <span className="badges-count">
+              <strong>{unlockedBadgeCount}</strong>/{badgeMeta.length}
+              <small>freigeschaltet</small>
+            </span>
+          </div>
+          <div className="badge-grid">
+            {badges.map(({ badge }) => (
+              <BadgeCard
+                key={badge.id}
+                badge={badge}
+                completed={completedQuests}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
 
-    <section className="final-cta"><div className="final-cta-orb" /><p className="sq-eyebrow">NO PLANS? NO PROBLEM.</p><h2>Dein nächstes<br /><em>Abenteuer beginnt heute.</em></h2><button className="primary-sq-button" onClick={() => scrollTo("finder")}><Dice5 size={18} /> Start a Sidequest <ArrowRight size={17} /></button></section>
-    <footer className="sq-footer"><a className="sq-logo" href="#top"><span className="sq-logo-mark">↗</span><span>Plan-a-Sidequest<span className="sq-logo-dot">↗</span></span></a><span>Weniger scrollen. Mehr erleben.</span><span>© 2026 SIDEQUEST / REAL-LIFE MODE</span></footer>
+      <section className="final-cta">
+        <div className="final-cta-orb" />
+        <p className="sq-eyebrow">NO PLANS? NO PROBLEM.</p>
+        <h2>
+          Dein nächstes
+          <br />
+          <em>Abenteuer beginnt heute.</em>
+        </h2>
+        <button
+          className="primary-sq-button"
+          onClick={() => scrollTo("finder")}
+        >
+          <Dice5 size={18} /> Start a Sidequest <ArrowRight size={17} />
+        </button>
+      </section>
+      <footer className="sq-footer">
+        <a className="sq-logo" href="#top">
+          <span className="sq-logo-mark">↗</span>
+          <span>
+            Plan-a-Sidequest<span className="sq-logo-dot">↗</span>
+          </span>
+        </a>
+        <span>Weniger scrollen. Mehr erleben.</span>
+        <span>© 2026 SIDEQUEST / REAL-LIFE MODE</span>
+      </footer>
 
-    {selectedQuest && <div className="quest-modal-backdrop" onClick={() => setSelectedQuest(null)}><aside className="quest-modal" role="dialog" aria-modal="true" onClick={(event) => event.stopPropagation()}><button className="modal-close" onClick={() => setSelectedQuest(null)} aria-label="Mission schließen"><X size={20} /></button><div className="modal-image"><img src={selectedQuest.image} alt="" /><span>SIDEQUEST #{selectedQuest.questNo}</span></div><div className="modal-content"><div className="quest-card-topline"><span><CategoryIcon category={selectedQuest.category} size={14} /> {selectedQuest.category}</span><span>{selectedQuest.region}</span></div><h2>{selectedQuest.title}</h2><p className="modal-mission">{selectedQuest.mission}</p><div className="modal-stat-row"><span><Clock3 size={15} /> {selectedQuest.duration}</span><span><CircleDollarSign size={15} /> {selectedQuest.cost} €</span><span><Users size={15} /> {selectedQuest.players}</span><span><Flame size={15} /> Überraschung <Stars count={selectedQuest.surprise} /></span></div><div className="modal-section"><span>MISSION RULES</span><ul>{selectedQuest.rules.map((rule) => <li key={rule}><Check size={15} /> {rule}</li>)}</ul></div><div className="modal-section modal-reward"><span>REWARD</span><p>{selectedQuest.reward}</p></div><div className="modal-actions"><button className="primary-sq-button" onClick={() => toggleCompleted(selectedQuest)}>{completedIds.includes(selectedQuest.id) ? <Check size={17} /> : <Gamepad2 size={17} />} {completedIds.includes(selectedQuest.id) ? "Completed" : "Accept Quest"}</button><a className="modal-pack-link" href={`/packliste?trip=${selectedQuest.id}`}>Packliste öffnen <Backpack size={15} /></a></div></div></aside></div>}
-  </main>;
+      {selectedQuest && (
+        <div
+          className="quest-modal-backdrop"
+          onClick={() => setSelectedQuest(null)}
+        >
+          <aside
+            className="quest-modal"
+            role="dialog"
+            aria-modal="true"
+            onClick={event => event.stopPropagation()}
+          >
+            <button
+              className="modal-close"
+              onClick={() => setSelectedQuest(null)}
+              aria-label="Mission schließen"
+            >
+              <X size={20} />
+            </button>
+            <div className="modal-image">
+              <img src={selectedQuest.image} alt="" />
+              <span>SIDEQUEST #{selectedQuest.questNo}</span>
+            </div>
+            <div className="modal-content">
+              <div className="quest-card-topline">
+                <span>
+                  <CategoryIcon category={selectedQuest.category} size={14} />{" "}
+                  {selectedQuest.category}
+                </span>
+                <span>{selectedQuest.region}</span>
+              </div>
+              <h2>{selectedQuest.title}</h2>
+              <p className="modal-mission">{selectedQuest.mission}</p>
+              <div className="modal-stat-row">
+                <span>
+                  <Clock3 size={15} /> {selectedQuest.duration}
+                </span>
+                <span>
+                  <CircleDollarSign size={15} /> {selectedQuest.cost} €
+                </span>
+                <span>
+                  <Users size={15} /> {selectedQuest.players}
+                </span>
+                <span>
+                  <Flame size={15} /> Überraschung{" "}
+                  <Stars count={selectedQuest.surprise} />
+                </span>
+              </div>
+              <div className="modal-section">
+                <span>MISSION RULES</span>
+                <ul>
+                  {selectedQuest.rules.map(rule => (
+                    <li key={rule}>
+                      <Check size={15} /> {rule}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="modal-section modal-reward">
+                <span>REWARD</span>
+                <p>{selectedQuest.reward}</p>
+              </div>
+              <div className="modal-actions">
+                <button
+                  className="primary-sq-button"
+                  onClick={() => toggleCompleted(selectedQuest)}
+                >
+                  {completedIds.includes(selectedQuest.id) ? (
+                    <Check size={17} />
+                  ) : (
+                    <Gamepad2 size={17} />
+                  )}{" "}
+                  {completedIds.includes(selectedQuest.id)
+                    ? "Completed"
+                    : "Accept Quest"}
+                </button>
+                <a
+                  className="modal-pack-link"
+                  href={`/packliste?trip=${selectedQuest.id}`}
+                >
+                  Packliste öffnen <Backpack size={15} />
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>
+      )}
+    </main>
+  );
 }
 
-function FinderQuestion({ title, options, onAnswer }: { title: string; options: string[][]; onAnswer: (value: string) => void }) {
-  return <div className="finder-question"><p className="sq-eyebrow"><span className="sq-eyebrow-line" /> QUESTION</p><h3>{title}</h3><div className="finder-options">{options.map(([value, label, hint], index) => <button key={value} onClick={() => onAnswer(value)}><span>0{index + 1}</span><strong>{label}</strong><small>{hint}</small><ChevronRight size={16} /></button>)}</div></div>;
+function FinderQuestion({
+  title,
+  options,
+  onAnswer,
+}: {
+  title: string;
+  options: string[][];
+  onAnswer: (value: string) => void;
+}) {
+  return (
+    <div className="finder-question">
+      <p className="sq-eyebrow">
+        <span className="sq-eyebrow-line" /> QUESTION
+      </p>
+      <h3>{title}</h3>
+      <div className="finder-options">
+        {options.map(([value, label, hint], index) => (
+          <button key={value} onClick={() => onAnswer(value)}>
+            <span>0{index + 1}</span>
+            <strong>{label}</strong>
+            <small>{hint}</small>
+            <ChevronRight size={16} />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
