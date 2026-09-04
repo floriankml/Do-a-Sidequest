@@ -1,10 +1,8 @@
-# Cloudflare Build-Debugging
+# Vercel Analytics Integration
 
-- [ ] Lokalen Produktions-Build und package.json prüfen.
-- [ ] Cloudflare-Pages-/Build-Konfiguration und das verbundene Repository identifizieren.
-- [ ] Letzten fehlgeschlagenen Build samt Stoppstelle und Fehlermeldung auslesen.
-- [ ] Ursache zwischen Build-Befehl, Ausgabeordner, Node-Version, Abhängigkeiten und Projektcode eingrenzen.
-- [ ] Notwendige Konfigurations- oder Codekorrektur umsetzen.
-- [ ] Lokalen Cloudflare-kompatiblen Build erneut ausführen.
-- [ ] Cloudflare-Deployment bzw. neuen Build-Status verifizieren.
-- [ ] Ergebnis, verbleibende DNS-/Plan-Abhängigkeiten und nächste Schritte übergeben.
+- [x] `@vercel/analytics` mit pnpm installieren.
+- [x] `Analytics` aus `@vercel/analytics/react` in `client/src/main.tsx` einbinden.
+- [x] TypeScript-Check und Produktions-Build ausführen.
+- [x] Dev-Server nach der Dependency-Änderung neu starten.
+- [ ] Änderungen committen und nach `floriankml/Do-a-Sidequest` auf `main` pushen.
+- [ ] Push und finalen Git-Status bestätigen.
