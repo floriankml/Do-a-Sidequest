@@ -491,3 +491,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .not-found-card .primary-sq-button { text-decoration: none; }
 .modal-link { display: inline-flex; align-items: center; gap: 8px; color: var(--cyan); text-decoration: none; }
 .modal-link:hover { color: var(--lime); text-decoration: underline; }
+.packing-mindset { display: flex; align-items: flex-start; gap: 10px; margin-top: 28px; border: 1px dashed var(--border); padding: 14px 16px; color: var(--slate); font-size: 13px; line-height: 1.5; }
+.packing-mindset svg { flex: 0 0 auto; margin-top: 2px; color: var(--pink); }
+.packing-mindset strong { color: var(--foreground); }
+.packing-hero-copy > p { margin: 26px 0 22px; max-width: 560px; }
