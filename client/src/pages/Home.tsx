@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowRight, ArrowUpRight, Backpack, Check, ChevronRight, CircleDollarSign, Clock3, Compass, Dice5, Dumbbell,
   Feather, Flame, Gamepad2, HandHeart, Landmark, Map, Menu, Mountain, Palette, Pizza, RotateCcw, Route, Shuffle,
-  Sparkles, Star, Tent, TrainFront, Users, X, Zap, Award, Gift, LockKeyhole, Medal, Trophy, Wallet, Wrench,
+  Sparkles, Star, Tent, TrainFront, Users, X, Zap, Award, ExternalLink, Gift, LockKeyhole, Medal, Trophy, Wallet, Wrench,
   type LucideIcon,
 } from "lucide-react";
 import { toast } from "sonner";
@@ -102,6 +102,7 @@ function QuestModal({ quest, status, onAdvance, onClose }: { quest: Trip; status
       <div className="modal-section"><span>MISSION RULES</span><ul>{quest.rules.map((rule) => <li key={rule}><Check size={15} /> {rule}</li>)}</ul></div>
       <div className="modal-section"><span>ABLAUF</span><ol className="modal-route">{quest.route.map((step) => <li key={step}>{step}</li>)}</ol></div>
       <div className="modal-columns"><div className="modal-section"><span><Wallet size={12} /> KOSTEN</span><ul>{quest.costs.map((item) => <li key={item.label} className="modal-cost"><span>{item.label}</span><strong>{item.value}</strong></li>)}</ul></div><div className="modal-section"><span><Wrench size={12} /> AUSRÜSTUNG</span><ul>{quest.gear.map((item) => <li key={item}><Backpack size={14} /> {item}</li>)}</ul></div></div>
+      {quest.links?.length ? <div className="modal-section"><span>HILFREICHE LINKS</span><ul>{quest.links.map((link) => <li key={link.href}><a className="modal-link" href={link.href} target="_blank" rel="noopener noreferrer"><ExternalLink size={14} /> {link.label}</a></li>)}</ul></div> : null}
       <div className="modal-section modal-reward"><span>REWARD</span><p>{quest.reward}</p></div>
       <div className="modal-actions"><StatusButton className="primary-sq-button" status={status} onAdvance={onAdvance} /><a className="modal-pack-link" href={`/packliste?trip=${quest.id}`}>Packliste öffnen <Backpack size={15} /></a></div>
     </div>

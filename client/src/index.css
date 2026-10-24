@@ -489,3 +489,5 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .not-found-card h1 em { color: var(--lime); font-style: normal; }
 .not-found-card > p:not(.sq-eyebrow) { margin: 0 0 8px; color: var(--slate); line-height: 1.6; }
 .not-found-card .primary-sq-button { text-decoration: none; }
+.modal-link { display: inline-flex; align-items: center; gap: 8px; color: var(--cyan); text-decoration: none; }
+.modal-link:hover { color: var(--lime); text-decoration: underline; }
