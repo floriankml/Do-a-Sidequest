@@ -3,9 +3,9 @@
 import { useId, type ReactNode } from "react";
 
 export type QuestScene =
-  | "sunrise" | "hills" | "summit" | "train" | "bus" | "city" | "route" | "ticket" | "dice" | "book"
+  | "sunrise" | "hills" | "summit" | "river" | "train" | "bus" | "city" | "route" | "ticket" | "treasure" | "book"
   | "food" | "cafe" | "pot" | "market" | "picnic" | "hanger" | "bike" | "night" | "stars" | "campfire"
-  | "tent" | "lake" | "camera" | "letter" | "calendar" | "hourglass" | "message" | "zine" | "sound" | "stage"
+  | "tent" | "lake" | "camera" | "letter" | "bench" | "hourglass" | "message" | "zine" | "filmstrip" | "sound" | "stage"
   | "palette" | "easel" | "museum" | "gallery" | "brickwall" | "film" | "bingo" | "clock" | "juggle" | "heart";
 
 type Palette = { sky: [string, string]; a: string; b: string; far: string; mid: string; near: string };
@@ -67,6 +67,13 @@ const scenes: Record<QuestScene, (ctx: Ctx) => ReactNode> = {
     {times(3, (i) => <ellipse key={i} cx={range(r, 40, 360)} cy={range(r, 170, 230)} rx={range(r, 40, 70)} ry={12} fill={PAPER} opacity={0.18} />)}
     <Ridge r={r} y={265} amp={20} fill={p.near} />
   </>,
+  river: ({ p, r }) => <>
+    <Ridge r={r} y={120} amp={40} fill={p.far} /><Ridge r={r} y={170} amp={30} fill={p.mid} />
+    <path d="M175 300 C150 255 255 235 225 200 C200 170 160 165 190 140 C210 124 222 118 214 104 L222 104 C236 120 226 132 208 146 C186 166 222 176 246 200 C280 236 214 262 245 300 Z" fill={p.b} opacity={0.85} />
+    <g stroke={PAPER} strokeWidth={2} strokeLinecap="round" opacity={0.5}><line x1={196} y1={262} x2={214} y2={258} /><line x1={218} y1={214} x2={232} y2={212} /><line x1={200} y1={158} x2={210} y2={154} /></g>
+    <circle cx={218} cy={100} r={10} fill={p.a} /><circle cx={218} cy={100} r={22} fill="none" stroke={p.a} strokeWidth={2} strokeDasharray="3 5" />
+    <g fill={p.near}>{times(6, (i) => { const x = i < 3 ? 40 + i * 34 : 260 + (i - 3) * 38; const h = range(r, 50, 90); return <path key={i} d={`M${x - 15} 300 L${x} ${300 - h} L${x + 15} 300 Z`} />; })}</g>
+  </>,
   train: ({ p, r }) => <>
     <circle cx={range(r, 270, 320)} cy={85} r={24} fill={p.b} opacity={0.85} />
     <Ridge r={r} y={190} amp={45} fill={p.far} />
@@ -116,13 +123,14 @@ const scenes: Record<QuestScene, (ctx: Ctx) => ReactNode> = {
       <text x={275} y={160} textAnchor="middle" fontSize={16} fontWeight={700} fill={p.near} fontFamily={MONO}>???</text>
     </g>
   </>,
-  dice: ({ p, r }) => { const die = (x: number, y: number, rot: number, pips: number[][]) => <g transform={`translate(${x} ${y}) rotate(${rot})`}><rect x={-34} y={-34} width={68} height={68} rx={12} fill={PAPER} />{pips.map(([px, py], i) => <circle key={i} cx={px} cy={py} r={6} fill={p.near} />)}</g>;
-    return <>
-      <Ridge r={r} y={240} amp={20} fill={p.near} />
-      <g stroke={p.a} strokeWidth={6} strokeLinecap="round" fill="none"><path d="M200 290 L200 215" /><path d="M200 255 L150 222" /><path d="M200 255 L250 222" /></g>
-      <g fill={p.a}><path d="M200 200 L190 218 L210 218 Z" /><path d="M140 216 L160 214 L152 232 Z" transform="rotate(-10 150 222)" /><path d="M260 216 L240 214 L248 232 Z" transform="rotate(10 250 222)" /></g>
-      {die(150, 120, range(r, -20, -5), [[-16, -16], [0, 0], [16, 16]])}{die(250, 105, range(r, 8, 22), [[-16, -16], [16, -16], [-16, 16], [16, 16], [0, 0]])}
-    </>; },
+  treasure: ({ p, r }) => <>
+    <Stars r={r} count={12} maxY={100} color={p.b} />
+    <Ridge r={r} y={215} amp={22} fill={p.mid} /><rect y={245} width={400} height={55} fill={p.near} />
+    <g fill={p.far}><circle cx={110} cy={120} r={42} /><circle cx={80} cy={150} r={34} /><circle cx={140} cy={150} r={36} /></g><rect x={104} y={150} width={14} height={98} fill={p.near} />
+    <path d={`M330 260 C300 ${range(r, 200, 230)} 260 170 220 196`} fill="none" stroke={p.a} strokeWidth={3} strokeDasharray="2 9" strokeLinecap="round" />
+    <g transform="translate(150 196)"><rect width={84} height={52} rx={6} fill={p.a} /><rect y={-8} width={84} height={16} rx={5} fill={p.b} /><rect x={36} y={6} width={12} height={14} rx={2} fill={p.near} /><g stroke={p.near} strokeWidth={2} opacity={0.35}><line x1={10} y1={30} x2={74} y2={30} /><line x1={10} y1={40} x2={60} y2={40} /></g></g>
+    <g transform="translate(250 92)"><path d="M0 34 C-22 8 -18 -20 0 -20 C18 -20 22 8 0 34 Z" fill={p.b} /><circle cy={-4} r={7} fill={p.near} /></g>
+  </>,
   book: ({ p, r }) => <>
     <Stars r={r} count={16} maxY={120} color={p.b} />
     <path d="M200 120 C230 70 270 80 300 40" fill="none" stroke={p.a} strokeWidth={3} strokeDasharray="2 9" strokeLinecap="round" />
@@ -256,13 +264,14 @@ const scenes: Record<QuestScene, (ctx: Ctx) => ReactNode> = {
       <g stroke={p.near} strokeWidth={2} opacity={0.35}><line x1={126} y1={182} x2={196} y2={182} /><line x1={126} y1={194} x2={180} y2={194} /></g>
     </g>
   </>,
-  calendar: ({ p }) => <>
-    <rect x={110} y={70} width={180} height={170} rx={8} fill={PAPER} /><rect x={110} y={70} width={180} height={36} rx={8} fill={p.a} /><rect x={110} y={96} width={180} height={10} fill={p.a} />
-    {[150, 250].map((x) => <rect key={x} x={x - 4} y={58} width={8} height={24} rx={4} fill={p.near} />)}
-    <g fill={p.near} opacity={0.3}>{times(4, (row) => times(6, (col) => <rect key={`${row}-${col}`} x={124 + col * 27} y={118 + row * 28} width={18} height={18} rx={2} />))}</g>
-    <circle cx={232} cy={183} r={20} fill="none" stroke={p.b} strokeWidth={4} />
-    <text x={200} y={95} textAnchor="middle" fontSize={15} fontWeight={700} fill={p.near} fontFamily={MONO}>+365 TAGE</text>
-    <g transform="translate(270 220) rotate(12)"><rect width={70} height={46} rx={3} fill={p.b} /><path d="M0 0 L35 26 L70 0" fill="none" stroke={p.near} strokeWidth={2.5} /></g>
+  bench: ({ p, r }) => <>
+    <circle cx={range(r, 250, 280)} cy={96} r={18} fill={p.b} opacity={0.8} />
+    <Ridge r={r} y={200} amp={26} fill={p.far} /><rect y={238} width={400} height={62} fill={p.near} />
+    <g fill={p.mid}><circle cx={90} cy={110} r={44} /><circle cx={60} cy={146} r={36} /><circle cx={124} cy={146} r={38} /></g><rect x={84} y={146} width={14} height={96} fill={p.near} />
+    <rect x={318} y={110} width={6} height={130} fill={PAPER} opacity={0.5} /><circle cx={321} cy={104} r={10} fill={p.a} /><circle cx={321} cy={104} r={26} fill={p.a} opacity={0.15} />
+    <g fill={p.a}><rect x={150} y={168} width={140} height={10} rx={3} /><rect x={150} y={184} width={140} height={10} rx={3} /><rect x={150} y={204} width={140} height={10} rx={3} /><rect x={160} y={214} width={8} height={30} /><rect x={272} y={214} width={8} height={30} /></g>
+    <g transform="translate(232 186) rotate(-8)"><rect width={34} height={20} fill={PAPER} /><line x1={17} y1={0} x2={17} y2={20} stroke={p.near} strokeWidth={1.5} /></g>
+    <g fill={p.b} fontFamily={MONO} fontWeight={700} fontSize={22}>{["?", "?", "?"].map((q, i) => <text key={i} x={180 + i * 32} y={140 - (i % 2) * 18}>{q}</text>)}</g>
   </>,
   hourglass: ({ p, r }) => <>
     <circle cx={200} cy={150} r={112} fill="none" stroke={p.a} strokeWidth={2} strokeDasharray="3 9" opacity={0.5} />
@@ -288,6 +297,15 @@ const scenes: Record<QuestScene, (ctx: Ctx) => ReactNode> = {
       <circle cx={180} cy={135} r={22} fill="none" stroke={p.near} strokeWidth={3} /><path d={`M215 120 L${range(r, 236, 246)} 150 L205 150 Z`} fill={p.a} stroke={p.near} strokeWidth={2} />
       <g stroke={p.near} strokeWidth={2} opacity={0.4}>{times(4, (i) => <line key={i} x1={148} y1={180 + i * 12} x2={i % 2 ? 230 : 250} y2={180 + i * 12} />)}</g>
     </g>
+  </>,
+  filmstrip: ({ p, r }) => <>
+    <g transform={`rotate(${range(r, -8, -4)} 200 150)`}>
+      <rect x={-20} y={98} width={440} height={104} fill={p.near} />
+      <g fill={PAPER} opacity={0.75}>{times(22, (i) => <g key={i}><rect x={-14 + i * 20} y={104} width={10} height={8} rx={1} /><rect x={-14 + i * 20} y={188} width={10} height={8} rx={1} /></g>)}</g>
+      {times(5, (i) => { const x = 10 + i * 78; const shift = i * 12; return <g key={i}><rect x={x} y={118} width={68} height={64} fill={p.mid} /><circle cx={x + 14 + shift} cy={160 - (i % 2) * 10} r={10} fill={p.a} /><rect x={x + 40} y={160} width={18} height={12} fill={p.b} opacity={0.85} /></g>; })}
+    </g>
+    <text x={330} y={242} textAnchor="middle" fontSize={14} fontWeight={700} fill={p.a} fontFamily={MONO}>00:15</text>
+    <circle cx={290} cy={238} r={5} fill="#ff716e" />
   </>,
   sound: ({ p, r }) => <>
     <g fill="none" strokeLinecap="round">{[40, 70, 100, 130, 160].map((radius, i) => <path key={radius} d={`M${110 + radius * 0.5} ${150 - radius} A${radius} ${radius} 0 0 1 ${110 + radius * 0.5} ${150 + radius}`} stroke={i % 2 ? p.b : p.a} strokeWidth={5} opacity={0.9 - i * 0.15} />)}</g>

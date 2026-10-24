@@ -65,7 +65,9 @@ export function createPackingList(trip: Trip): PackingItem[] {
 
   // Drop generic items that the quest gear already names, so nothing appears twice.
   const gearWords = new Set(trip.gear.join(" ").toLowerCase().split(/[^a-zäöüß]+/));
-  return items.filter((item) => item.category === "Quest-Ausrüstung" || !gearWords.has(item.item.toLowerCase().split(/[^a-zäöüß]+/)[0]));
+  const fillers = new Set(["kleiner", "kleine", "kleines", "mini", "warme", "etwas"]);
+  const keyword = (item: string) => item.toLowerCase().split(/[^a-zäöüß]+/).find((word) => word && !fillers.has(word)) ?? "";
+  return items.filter((item) => item.category === "Quest-Ausrüstung" || !gearWords.has(keyword(item.item)));
 }
 
 export const packingCategories: PackingCategory[] = ["Quest-Ausrüstung", "Navigation & Safety", "Klamotten", "Essen & Trinken", "Schlafen", "Draußen"];
