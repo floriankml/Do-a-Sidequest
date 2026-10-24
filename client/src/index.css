@@ -442,3 +442,56 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .badge-grid { grid-template-columns: 1fr; }
   .badge-card { min-height: 110px; }
 }
+
+/* Quest cover art: self-hosted SVG scenes replace remote photos and fill every image slot. */
+.quest-art { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.quest-card-image { display: block; width: 100%; padding: 0; border: 0; background: var(--card); cursor: pointer; text-align: left; }
+.quest-card-image .quest-art { transition: transform 500ms var(--ease-out), filter 300ms var(--ease-out); filter: saturate(.9) brightness(.9); }
+.quest-card:hover .quest-card-image .quest-art { filter: saturate(1) brightness(1); transform: scale(1.05); }
+.quest-card-image:focus-visible, .hero-visual-card:focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; }
+.hero-visual-card { display: block; width: 100%; padding: 0; color: var(--foreground); text-align: left; cursor: pointer; transition: transform 300ms var(--ease-out); }
+.hero-visual-card:hover { transform: rotate(0deg) scale(1.01); }
+.hero-visual-card .quest-art { filter: saturate(.95) contrast(1.05); }
+.generated-image .quest-art, .modal-image .quest-art { filter: saturate(.95) brightness(.92); }
+.packing-art { position: relative; overflow: hidden; aspect-ratio: 4 / 5; }
+
+/* Quest states: open → accepted (active) → completed. */
+.accept-button-active { border-style: dashed; background: color-mix(in srgb, var(--accent-color, var(--lime)) 14%, transparent); }
+.primary-sq-button.accept-button-active { border-style: dashed; background: rgba(200,255,61,.14); color: var(--lime); }
+.primary-sq-button.accept-button-complete { background: transparent; color: var(--lime); }
+
+/* Finder navigation. */
+.finder-question-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.finder-back { border: 0; padding: 6px 0; background: transparent; color: var(--slate); font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; }
+.finder-back:hover { color: var(--lime); }
+.finder-ready-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.finder-ready-actions .reset-finder { border-color: rgba(255,255,255,.23); background: transparent; color: var(--foreground); }
+
+/* Mission briefing details inside the modal. */
+.modal-tagline { margin: 0 0 6px; color: var(--foreground); font-family: var(--display); font-size: 18px; letter-spacing: -.03em; }
+.modal-section > span { display: inline-flex; align-items: center; gap: 6px; }
+.modal-route { display: grid; gap: 0; margin: 13px 0 0; padding: 0; list-style: none; counter-reset: route; }
+.modal-route li { position: relative; padding: 0 0 13px 26px; color: var(--slate); font-size: 13px; counter-increment: route; }
+.modal-route li::before { content: counter(route, decimal-leading-zero); position: absolute; left: 0; top: 1px; color: var(--cyan); font-family: var(--mono); font-size: 9px; font-weight: 700; }
+.modal-route li:not(:last-child)::after { content: ""; position: absolute; left: 6px; top: 16px; bottom: 2px; width: 1px; background: var(--border); }
+.modal-columns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.modal-section li.modal-cost { justify-content: space-between; gap: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 7px; }
+.modal-cost strong { color: var(--foreground); font-family: var(--mono); font-size: 11px; white-space: nowrap; }
+@media (max-width: 650px) { .modal-columns { grid-template-columns: 1fr; gap: 0; } }
+
+/* Locked badges stay grey even when their card has a colour modifier. */
+.badge-card.badge-locked { --badge-color: #74808c; }
+
+/* 404: same dark quest language as the rest of the site. */
+.not-found { display: grid; place-items: center; padding: 40px 20px; }
+.not-found-card { display: grid; gap: 18px; justify-items: start; max-width: 560px; border: 1px solid var(--lime); padding: clamp(28px, 6vw, 56px); background: rgba(200,255,61,.04); }
+.not-found-card h1 { margin: 0; font-family: var(--display); font-size: clamp(44px, 8vw, 76px); letter-spacing: -.08em; line-height: .94; }
+.not-found-card h1 em { color: var(--lime); font-style: normal; }
+.not-found-card > p:not(.sq-eyebrow) { margin: 0 0 8px; color: var(--slate); line-height: 1.6; }
+.not-found-card .primary-sq-button { text-decoration: none; }
+.modal-link { display: inline-flex; align-items: center; gap: 8px; color: var(--cyan); text-decoration: none; }
+.modal-link:hover { color: var(--lime); text-decoration: underline; }
+.packing-mindset { display: flex; align-items: flex-start; gap: 10px; margin-top: 28px; border: 1px dashed var(--border); padding: 14px 16px; color: var(--slate); font-size: 13px; line-height: 1.5; }
+.packing-mindset svg { flex: 0 0 auto; margin-top: 2px; color: var(--pink); }
+.packing-mindset strong { color: var(--foreground); }
+.packing-hero-copy > p { margin: 26px 0 22px; max-width: 560px; }
