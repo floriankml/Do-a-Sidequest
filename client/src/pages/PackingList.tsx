@@ -1,17 +1,18 @@
 /* Trail Notes reminder: This page is the calm pre-departure desk—clear checklist hierarchy, saffron route marks, and practical notes over decoration. */
 
 import { useEffect, useMemo, useState } from "react";
-import { ArrowLeft, Backpack, Check, CircleDollarSign, Compass, RotateCcw, Route, Save, Tent, TrainFront } from "lucide-react";
+import { ArrowLeft, Backpack, Check, CircleDollarSign, Compass, Gamepad2, RotateCcw, Route, Save, Tent, TrainFront } from "lucide-react";
 import { Link } from "wouter";
 import { createPackingList, packingCategories, type PackingCategory } from "@/lib/packing";
-import { trips } from "./Home";
+import QuestArt from "@/components/QuestArt";
+import { trips } from "@/lib/quests";
 
 const STORAGE_KEY = "plan-a-sidequest-packed";
 
 export default function PackingList() {
-  const params = new URLSearchParams(window.location.search);
-  const requestedTrip = params.get("trip");
+  const requestedTrip = new URLSearchParams(window.location.search).get("trip");
   const trip = trips.find((item) => item.id === requestedTrip) ?? trips[0];
+  useEffect(() => { document.title = `Packliste: ${trip.title} — Sidequest`; }, [trip.title]);
   const items = useMemo(() => createPackingList(trip), [trip]);
   const [checked, setChecked] = useState<Record<string, boolean>>({});
   const [showEssentials, setShowEssentials] = useState(false);
@@ -50,21 +51,20 @@ export default function PackingList() {
   return (
     <main className="packing-shell">
       <header className="packing-header">
-        <Link className="brand-lockup packing-brand" href="/" aria-label="Zurück zu Plan-a-Sidequest">
-          <img src="/manus-storage/sidequest-mark_21ad81d5.png" alt="" className="brand-mark" />
-          <span className="brand-wordmark">Plan-a-Sidequest<span className="brand-dash">↗</span></span>
+        <Link className="sq-logo packing-brand" href="/" aria-label="Zurück zu Plan-a-Sidequest">
+          <span className="sq-logo-mark">↗</span><span>Plan-a-Sidequest<span className="sq-logo-dot">↗</span></span>
         </Link>
-        <Link className="packing-back" href={`/?trip=${trip.id}#abenteuer`}><ArrowLeft size={16} /> Zurück zur Sidequest</Link>
+        <Link className="packing-back" href={`/?quest=${trip.id}`}><ArrowLeft size={16} /> Zurück zur Sidequest</Link>
       </header>
 
       <section className="packing-hero">
         <div className="packing-hero-copy">
-          <div className="eyebrow eyebrow-dark"><span className="eyebrow-marker" /> zwischenstopp · packliste</div>
+          <div className="sq-eyebrow"><span className="sq-eyebrow-line" /> SIDEQUEST #{trip.questNo} · PACKLISTE</div>
           <h1>Rucksack auf.<br /><em>Kopf frei.</em></h1>
           <p>Eine ausführliche, aber realistische Liste für <strong>{trip.title}</strong>. Erst leihen oder aus dem Schrank holen, dann kaufen.</p>
-          <div className="packing-trip-meta"><span><MapPinIcon /> {trip.region}</span><span><TrainFront size={15} /> {trip.transport}</span><span><CircleDollarSign size={15} /> ca. {trip.cost} €</span></div>
+          <div className="packing-trip-meta"><span><MapPinIcon /> {trip.region}</span><span><TrainFront size={15} /> {trip.transport}</span><span><CircleDollarSign size={15} /> {trip.cost === 0 ? "0 €" : `bis ${trip.cost} €`}</span></div>
         </div>
-        <div className="packing-hero-image-wrap"><img src={trip.image} alt={`Landschaft für ${trip.title}`} /><span className="packing-image-note">NOTIZ 03 · NICHTS MUSS NEU SEIN</span></div>
+        <div className="packing-hero-image-wrap"><div className="packing-art"><QuestArt scene={trip.scene} seed={trip.id} accent={trip.accent} label={`Illustration zu ${trip.title}`} /></div><span className="packing-image-note">NOTIZ 03 · NICHTS MUSS NEU SEIN</span></div>
       </section>
 
       <section className="packing-workspace">
@@ -87,12 +87,13 @@ export default function PackingList() {
         </div>
       </section>
 
-      <footer className="packing-footer"><Link href="/"><Backpack size={17} /> Plan-a-Sidequest</Link><span>Weniger Zeug. Mehr Weg.</span><Link href={`/?trip=${trip.id}#abenteuer`}>Noch eine Sidequest <ArrowLeft size={14} /></Link></footer>
+      <footer className="packing-footer"><Link href="/"><Backpack size={17} /> Plan-a-Sidequest</Link><span>Weniger Zeug. Mehr Weg.</span><Link href="/#quests">Noch eine Sidequest <ArrowLeft size={14} /></Link></footer>
     </main>
   );
 }
 
 function categoryIcon(category: PackingCategory) {
+  if (category === "Quest-Ausrüstung") return <Gamepad2 size={17} />;
   if (category === "Schlafen") return <Tent size={17} />;
   if (category === "Navigation & Safety") return <Route size={17} />;
   if (category === "Essen & Trinken") return <CircleDollarSign size={17} />;
